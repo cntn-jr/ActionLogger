@@ -48,8 +48,7 @@ public class Login extends HttpServlet {
 				
 				if(canLogin) {//パスワードが正しければ
 					//session.setAttribute("loginUser", loginUser);
-					RequestDispatcher dispatcher = request.getRequestDispatcher("/");
-					dispatcher.forward(request, response);
+					response.sendRedirect("/ActionLogger/Main");
 				}else {
 					response.sendRedirect("/ActionLogger/Login");//もう一度ログイン画面へ
 				}

@@ -76,6 +76,8 @@
 						class="form-control" id="tel" name="tel_number"
 						placeholder="xxxx-xxxx-xxxx">
 				</div>
+				<%-- フォームの正当性確認データ --%>
+				<input type="hidden" name="vKey" value="${validationKey.value}">
 				<div class="mb-3">
 					<label for="email">メールアドレス</label> <input type="text"
 						class="form-control" id="email" name="mail" placeholder="メールアドレス">

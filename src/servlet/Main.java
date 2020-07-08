@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import model.User;
 
 /**
  * Servlet implementation class Main
@@ -28,9 +31,20 @@ public class Main extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
-		dispatcher.forward(request, response);
+		
+		HttpSession session = request.getSession();
+		
+		User user = (User) session.getAttribute("loginUser");
+
+		if (user == null) {
+			// MainViewを表示
+			response.sendRedirect("/ActionLogger/Login");
+
+		} else {
+			// MainViewを表示
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
+			dispatcher.forward(request, response);
+		}
 	}
 
 	/**

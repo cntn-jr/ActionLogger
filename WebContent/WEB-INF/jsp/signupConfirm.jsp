@@ -51,6 +51,8 @@
 				<div class="mb-3">
 					メールアドレス　: ${newUser.mail}
 				</div>
+				<%-- フォームの正当性確認データ --%>
+				<input type="hidden" name="vKey" value="${validationKey.value}">
 				<input type="hidden" name="status" value="confirmed"></input>
 				<input type="submit" class="btn btn-secondary btn-block btn-lg" id="enterRoom" value="OK"></input>
 			</form>

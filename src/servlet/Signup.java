@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.User;
+import model.ValidationKey;
 
 /**
  * Servlet implementation class Signup
@@ -35,7 +37,28 @@ public class Signup extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		
+		// 正当なフォームから送られたデータであることを確認するためのキーの生成
+				ValidationKey validationKey = new ValidationKey();
+				try {
+					Random random = new Random();
+					String randomStr = String.valueOf(random.nextLong());
+					MessageDigest validation = MessageDigest.getInstance("MD5");
+					validation.reset();
+					validation.update(randomStr.getBytes("utf8"));
+					String vkey = String.format("%032x", new BigInteger(1, validation.digest()));
+					validationKey.setValue(vkey);
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+
+				// フォーム確認キーをセッションスコープに設定
+				HttpSession session = request.getSession();
+				session.setAttribute("validationKey", validationKey);
+		
+		//HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
 				
 		if(loginUser == null) {
@@ -51,6 +74,17 @@ public class Signup extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		
+		// フォームから送られた確認キーが保存したものと一致するか確認
+				ValidationKey validationKey = (ValidationKey) session.getAttribute("validationKey");
+				if (!request.getParameter("vKey").equals(validationKey.getValue())) {
+					 // 一致しなかったので、セッションスコープに保存したキーを破棄し、エラーページに
+					session.removeAttribute("validationKey");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorView.jsp");
+					dispatcher.forward(request, response);
+					return;
+				}
 		
 		User user = new User();
 		user.setUser_id( request.getParameter("user_id") );
@@ -60,7 +94,7 @@ public class Signup extends HttpServlet {
 		user.setMail( request.getParameter("mail") );
 		
 		try {
-			//繝代せ繝ｯ繝ｼ繝峨�ｮ繝上ャ繧ｷ繝･蛹�
+			// パスワードのハッシュ化
 			String rawPassword = request.getParameter("password");
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 			digest.reset();
@@ -69,7 +103,6 @@ public class Signup extends HttpServlet {
 			
 			user.setPasswordHash(passwordHash);
 			
-			HttpSession session = request.getSession();
 			session.setAttribute("newUser", user);
 		    
 			RequestDispatcher dispatcher =

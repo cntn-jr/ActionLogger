@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.UserDAO;
 import model.User;
+import model.ValidationKey;
 
 /**
  * Servlet implementation class SignupConfirm
@@ -42,6 +43,18 @@ public class SignupConfirm extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
+		
+		// フォームから送られた確認キーが保存したものと一致するか確認
+		ValidationKey validationKey = (ValidationKey) session.getAttribute("validationKey");
+		if (!request.getParameter("vKey").equals(validationKey.getValue())) {
+			 // 一致しなかったので、セッションスコープに保存したキーを破棄し、エラーページに
+			 session.removeAttribute("validationKey");
+			 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+			 dispatcher.forward(request, response);
+			 return;
+		}
+		
+		
 		User user = (User)session.getAttribute("newUser");
 		UserDAO userDAO = new UserDAO();
 		userDAO.save(user);

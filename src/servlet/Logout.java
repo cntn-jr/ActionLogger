@@ -20,11 +20,14 @@ public class Logout extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// セッションスコープを破棄
-		HttpSession session = request.getSession();
-		session.invalidate();
+		//HttpSession session = request.getSession();
+		//session.invalidate();
+		request.getSession().invalidate();
 
+//		// メイン画面にリダイレクト
+//		response.sendRedirect("/ActionLogger/Main");
 		// ログアウト画面にフォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/logout.jsp");
 		dispatcher.forward(request, response);
 	}
 
