@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.UserDAO;
+import model.ErrorViewData;
 import model.User;
 import model.ValidationKey;
 
@@ -49,6 +50,10 @@ public class SignupConfirm extends HttpServlet {
 		if (!request.getParameter("vKey").equals(validationKey.getValue())) {
 			 // 一致しなかったので、セッションスコープに保存したキーを破棄し、エラーページに
 			 session.removeAttribute("validationKey");
+			//表示データを用意する
+				ErrorViewData errorData = new ErrorViewData("問題が発生しました。",
+														"トップに戻る","/ActionLogger/Main");
+				request.setAttribute("errorData", errorData);
 			 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
 			 dispatcher.forward(request, response);
 			 return;

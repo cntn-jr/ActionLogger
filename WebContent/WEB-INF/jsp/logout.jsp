@@ -56,7 +56,7 @@ window.addEventListener("popstate", function() {
 		<div class="col-８">
 			<h4 h3 mb-3 font-weight-normal>AcctionLoggerログアウト</h4>
 			ログアウトしました <br>
-			<a href="/ActionLoggerSample/login">ログインページへ</a>
+			<a href="/ActionLogger/Login">ログインページへ</a>
 
 		</div>
 		<div class="col"></div>

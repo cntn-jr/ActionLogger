@@ -45,9 +45,9 @@
 	<div class="row">
 		<div class="col"></div>
 		<div class="col-８">
-			<h4 h3 mb-3 font-weight-normal>AcctionLoggerログイン</h4>
-			不正な処理が行われました。 <br>
-			<a href="/ActionLoggerSample/">トップへ</a>
+			<h4 h3 mb-3 font-weight-normal>AcctionLoggerエラー</h4>
+			${errorData.message}<br>
+			<a href="${errorData.link}">${errorData.linkStr}</a>
 
 		</div>
 		<div class="col"></div>
