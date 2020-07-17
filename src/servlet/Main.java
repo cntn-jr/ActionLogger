@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.Info_actDAO;
+import model.InformationAction;
 import model.User;
 
 /**
@@ -34,9 +38,17 @@ public class Main extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		User user = (User) session.getAttribute("loginUser");
+		String user_id = (String) session.getAttribute("loginUser_id");
+		
+		Info_actDAO infoDAO = new Info_actDAO(); 
+		List<InformationAction> logList = new ArrayList<>();
+		logList = infoDAO.get(user_id);
+		session.setAttribute("logList", logList);
+		
+		
+		
 
-		if (user == null) {
+		if (user_id == null) {
 			// MainViewを表示
 			response.sendRedirect("/ActionLogger/Login");
 

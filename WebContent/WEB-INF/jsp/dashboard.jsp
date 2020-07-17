@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 	<h1 class="h2">Dashboard</h1>
@@ -11,11 +13,11 @@
 		<tbody>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">ユーザー名</tk>
-				<td>user001</td>
+				<td><c:out value="${loginUser_id}"/></td>
 			</tr>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">氏名</th>
-				<td>河原電子</td>
+				<td><c:out value="${loginUserName}"/></td>
 			</tr>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">参加グループ</th>
@@ -35,4 +37,8 @@
 			</tr>
 		</tbody>
 	</table>
+	
+	
+	
+	
 </div>

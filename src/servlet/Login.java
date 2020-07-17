@@ -44,14 +44,15 @@ public class Login extends HttpServlet {
 				User loginUser = new User(user_id);
 				
 				LoginLogic loginRogic = new LoginLogic();
-				boolean canLogin = loginRogic.loginLogic(user_id,password,session);//userのパスワードが正しいかチェック
+				Boolean canLogin = loginRogic.loginLogic(user_id,password,session);//userのパスワードが正しいかチェック
 				
-				if(canLogin) {//パスワードが正しければ
-					//session.setAttribute("loginUser", loginUser);
+				if(canLogin == true) {//パスワードが正しければ
+//					session.setAttribute("loginUser_id", canLogin.getUser_id());
+//					session.setAttribute("loginName", canLogin.getName());
 					response.sendRedirect("/ActionLogger/Main");
 				}else {
 					response.sendRedirect("/ActionLogger/Login");//もう一度ログイン画面へ
 				}
-	}
 
+}
 }

@@ -10,22 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.Info_actDAO;
 import dao.UserDAO;
 import model.ErrorViewData;
+import model.InformationAction;
 import model.User;
 import model.ValidationKey;
 
 /**
- * Servlet implementation class SignupConfirm
+ * Servlet implementation class SubmitActionConfirm
  */
-@WebServlet("/SignupConfirm")
-public class SignupConfirm extends HttpServlet {
+@WebServlet("/SubmitActionConfirm")
+public class SubmitActionConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SignupConfirm() {
+    public SubmitActionConfirm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,27 +47,25 @@ public class SignupConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		
-		// フォームから送られた確認キーが保存したものと一致するか確認
-		ValidationKey validationKey = (ValidationKey) session.getAttribute("validationKey");
-		if (!request.getParameter("vKey").equals(validationKey.getValue())) {
-			 // 一致しなかったので、セッションスコープに保存したキーを破棄し、エラーページに
-			 session.removeAttribute("validationKey");
-			//表示データを用意する
-				ErrorViewData errorData = new ErrorViewData("問題が発生しました。",
-														"トップに戻る","/ActionLogger/Main");
-				request.setAttribute("errorData", errorData);
-			 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
-			 dispatcher.forward(request, response);
-			 return;
-		}
+//		// フォームから送られた確認キーが保存したものと一致するか確認
+//		ValidationKey validationKey = (ValidationKey) session.getAttribute("validationKey");
+//		if (!request.getParameter("vKey").equals(validationKey.getValue())) {
+//			 // 一致しなかったので、セッションスコープに保存したキーを破棄し、エラーページに
+//			 session.removeAttribute("validationKey");
+//			//表示データを用意する
+//				ErrorViewData errorData = new ErrorViewData("問題が発生しました。",
+//														"トップに戻る","/ActionLogger/Main");
+//				request.setAttribute("errorData", errorData);
+//			 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+//			 dispatcher.forward(request, response);
+//			 return;
+//		}
 		
 		
-		User user = (User)session.getAttribute("newUser");
-		UserDAO userDAO = new UserDAO();
-		userDAO.save(user);
-		session.setAttribute("loginUser_id", user.getUser_id());
-		//session.setAttribute("newUser", null);
-		session.removeAttribute("newUser");//セッションスコープの除去
+		InformationAction log = (InformationAction)session.getAttribute("logAct");
+		Info_actDAO info_actDAO = new Info_actDAO();
+		info_actDAO.save(log);
+		session.removeAttribute("logAct");//セッションスコープの除去
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 		dispatcher.forward(request, response);
 	}

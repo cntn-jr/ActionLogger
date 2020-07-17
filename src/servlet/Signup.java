@@ -45,30 +45,30 @@ public class Signup extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 正当なフォームから送られたデータであることを確認するためのキーの生成
-				ValidationKey validationKey = new ValidationKey();
-				try {
-					Random random = new Random();
-					String randomStr = String.valueOf(random.nextLong());
-					MessageDigest validation = MessageDigest.getInstance("MD5");
-					validation.reset();
-					validation.update(randomStr.getBytes("utf8"));
-					String vkey = String.format("%032x", new BigInteger(1, validation.digest()));
-					validationKey.setValue(vkey);
-				} catch (NoSuchAlgorithmException e) {
-					e.printStackTrace();
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
+//		// 正当なフォームから送られたデータであることを確認するためのキーの生成
+//				ValidationKey validationKey = new ValidationKey();
+//				try {
+//					Random random = new Random();
+//					String randomStr = String.valueOf(random.nextLong());
+//					MessageDigest validation = MessageDigest.getInstance("MD5");
+//					validation.reset();
+//					validation.update(randomStr.getBytes("utf8"));
+//					String vkey = String.format("%032x", new BigInteger(1, validation.digest()));
+//					validationKey.setValue(vkey);
+//				} catch (NoSuchAlgorithmException e) {
+//					e.printStackTrace();
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
 
 				// フォーム確認キーをセッションスコープに設定
 				HttpSession session = request.getSession();
-				session.setAttribute("validationKey", validationKey);
+//				session.setAttribute("validationKey", validationKey);
 		
 		//HttpSession session = request.getSession();
-		User loginUser = (User)session.getAttribute("loginUser");
+		String loginUser_id = (String)session.getAttribute("loginUser_id");
 				
-		if(loginUser == null) {
+		if(loginUser_id == null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 			dispatcher.forward(request, response);
 		}else {
@@ -83,19 +83,19 @@ public class Signup extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		
-		// フォームから送られた確認キーが保存したものと一致するか確認
-				ValidationKey validationKey = (ValidationKey) session.getAttribute("validationKey");
-				if (!request.getParameter("vKey").equals(validationKey.getValue())) {
-					 // 一致しなかったので、セッションスコープに保存したキーを破棄し、エラーページに
-					session.removeAttribute("validationKey");
-					//表示データを用意する
-					ErrorViewData errorData = new ErrorViewData("問題が発生しました。","トップに戻る","/ActionLogger/Main");
-					request.setAttribute("errorData", errorData);
-					//エラー表示にフォワード
-					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
-					dispatcher.forward(request, response);
-					return;
-				}
+//		// フォームから送られた確認キーが保存したものと一致するか確認
+//				ValidationKey validationKey = (ValidationKey) session.getAttribute("validationKey");
+//				if (!request.getParameter("vKey").equals(validationKey.getValue())) {
+//					 // 一致しなかったので、セッションスコープに保存したキーを破棄し、エラーページに
+//					session.removeAttribute("validationKey");
+//					//表示データを用意する
+//					ErrorViewData errorData = new ErrorViewData("問題が発生しました。","トップに戻る","/ActionLogger/Main");
+//					request.setAttribute("errorData", errorData);
+//					//エラー表示にフォワード
+//					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+//					dispatcher.forward(request, response);
+//					return;
+//				}
 		
 		User user = new User();
 		
@@ -128,10 +128,10 @@ public class Signup extends HttpServlet {
 		} catch (InputCheckException e) {
 			//表示データを用意する
 			ErrorViewData errorData = new ErrorViewData("フォームに入力された内容に問題がありました。",
-													"入力画面に戻る","/ActionLoggerSample/adduser");
+													"入力画面に戻る","/ActionLogger/adduser");
 			request.setAttribute("errorData", errorData);
 			//エラー表示にフォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/errorView.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

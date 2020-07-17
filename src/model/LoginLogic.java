@@ -30,7 +30,8 @@ public class LoginLogic {
 		User user = userDAO.get( user_id );
 		
 		if(user != null && user.getPasswordHash().equals(passwordHash)) {
-			session.setAttribute("loginUser", user);
+			session.setAttribute("loginUser_id", user.getUser_id());
+			session.setAttribute("loginUserName", user.getName());
 			return true;
 		}
 		
