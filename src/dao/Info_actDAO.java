@@ -137,9 +137,9 @@ public class Info_actDAO {
 				if(nextId == null) {
 					nextId = "1";
 				}else{
-				Integer i = Integer.parseInt(nextId);
-				i++;
-				nextId = i.toString();
+					Integer i = Integer.parseInt(nextId);
+					i++;
+					nextId = i.toString();
 				}
 				return nextId; 
 				

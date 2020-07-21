@@ -41,6 +41,7 @@ public class Main extends HttpServlet {
 		Info_actDAO infoDAO = new Info_actDAO();
 		List<InformationAction> easyLogList = new ArrayList<>();
 		easyLogList = infoDAO.getLimit(user_id);
+		
 		List<InformationAction> allLogList = new ArrayList<>();
 		allLogList = infoDAO.getAll(user_id);
 

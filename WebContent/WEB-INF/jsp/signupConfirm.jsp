@@ -31,7 +31,7 @@
 		<div class="col-8">
 			<form class="form-adduser" action="/ActionLogger/SignupConfirm"
 				method="post">
-				
+
 				<h4 h3 mb-3 font-weight-normal>新規ユーザー</h4>
 				<div class="mb-3">
 					ユーザーID　: ${newUser.user_id}
