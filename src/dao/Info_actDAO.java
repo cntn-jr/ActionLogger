@@ -19,7 +19,7 @@ public class Info_actDAO {
 
 		//繝ｦ繝ｼ繧ｶ繝ｼID繧呈欠螳壹＠縺ｦ縲√Θ繝ｼ繧ｶ繝ｼ諠�蝣ｱ繧貞叙蠕�
 		//繝ｦ繝ｼ繧ｶ繝ｼID縺悟ｭ伜惠縺励↑縺�蝣ｴ蜷医�ｯnull繧定ｿ斐☆
-		public List get(String user_id) {
+		public List<InformationAction> getAll(String user_id) {
 			InformationAction log= null;
 			List<InformationAction> logList = new ArrayList<InformationAction>();
 
@@ -27,8 +27,45 @@ public class Info_actDAO {
 			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 				// SELECT譁�縺ｮ貅門ｙ
-				String sql = "SELECT * FROM info_act WHERE user_id =" + user_id + " ORDER BY log_id; ";
+				String sql = "SELECT * FROM info_act WHERE user_id = ? ORDER BY date_submit;";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
+				pStmt.setString(1, user_id);
+
+				// SELECT繧貞ｮ溯｡�
+				ResultSet rs = pStmt.executeQuery();
+				
+				// SELECT譁�縺ｮ邨先棡繧置ser縺ｫ譬ｼ邏�
+				while (rs.next()) {
+					log= new InformationAction();
+					log.setLog_id(rs.getString("log_id"));
+					log.setUser_id(rs.getString("user_id"));
+					log.setDateSbm(rs.getString("date_submit"));
+					log.setOut_datetime(rs.getString("goout_start"));
+					log.setIn_datetime(rs.getString("goout_end"));
+					log.setPlace(rs.getString("place"));
+					log.setReason(rs.getString("reason"));
+					log.setRemarks(rs.getString("remarks"));
+					
+					logList.add(log);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+			return logList;
+		}
+		
+		public List<InformationAction> getLimit(String user_id) {
+			InformationAction log= null;
+			List<InformationAction> logList = new ArrayList<InformationAction>();
+
+			// 繝�繝ｼ繧ｿ繝吶�ｼ繧ｹ謗･邯�
+			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+				// SELECT譁�縺ｮ貅門ｙ
+				String sql = "SELECT * FROM info_act WHERE user_id = ? ORDER BY date_submit LIMIT 5;";
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				pStmt.setString(1, user_id);
 
 				// SELECT繧貞ｮ溯｡�
 				ResultSet rs = pStmt.executeQuery();

@@ -14,15 +14,13 @@ import javax.servlet.http.HttpSession;
 
 import dao.Info_actDAO;
 import model.InformationAction;
-import model.User;
-
 /**
  * Servlet implementation class Main
  */
-@WebServlet("/Main")
+@WebServlet("/")
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,18 +33,23 @@ public class Main extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		String user_id = (String) session.getAttribute("loginUser_id");
-		
-		Info_actDAO infoDAO = new Info_actDAO(); 
-		List<InformationAction> logList = new ArrayList<>();
-		logList = infoDAO.get(user_id);
-		session.setAttribute("logList", logList);
-		
-		
-		
+
+		Info_actDAO infoDAO = new Info_actDAO();
+		List<InformationAction> easyLogList = new ArrayList<>();
+		easyLogList = infoDAO.getLimit(user_id);
+		List<InformationAction> allLogList = new ArrayList<>();
+		allLogList = infoDAO.getAll(user_id);
+
+
+		session.setAttribute("easyLogList", easyLogList);
+		session.setAttribute("allLogList", allLogList);
+
+
+
 
 		if (user_id == null) {
 			// MainViewを表示
@@ -54,7 +57,7 @@ public class Main extends HttpServlet {
 
 		} else {
 			// MainViewを表示
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainView.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

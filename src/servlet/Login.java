@@ -49,7 +49,7 @@ public class Login extends HttpServlet {
 				if(canLogin == true) {//パスワードが正しければ
 //					session.setAttribute("loginUser_id", canLogin.getUser_id());
 //					session.setAttribute("loginName", canLogin.getName());
-					response.sendRedirect("/ActionLogger/Main");
+					response.sendRedirect("/ActionLogger/");
 				}else {
 					response.sendRedirect("/ActionLogger/Login");//もう一度ログイン画面へ
 				}
