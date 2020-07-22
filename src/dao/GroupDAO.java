@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.GroupMgt;
+import model.RamdomIdCreate;
 
 public class GroupDAO {
 	
@@ -37,6 +38,26 @@ public class GroupDAO {
 		return true;
 	}
 	
+	public List<String> getGroupNameList(String user_id){
+		List<String> nameList = new ArrayList<>();
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "SELECT group_name FROM mgt_group where admin_id = ?;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, user_id);
+			ResultSet rs = pStmt.executeQuery();
+			String gName;
+			while(rs.next()) {
+				gName = rs.getString("group_name");
+				nameList.add(gName);
+			}
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+		return nameList;
+	}
+	
 	public String nextGroupId(){
 		List<String> idList = new ArrayList<>();
 		String nextGroupId = null;
@@ -45,14 +66,19 @@ public class GroupDAO {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			ResultSet rs = pStmt.executeQuery();
 			String id = null;
+			RamdomIdCreate createId = new RamdomIdCreate();
 			while(rs.next()) {
 				id = rs.getString("group_id");
-				idList.add(id);
+				idList.add(id);//データベースに保存されているグループIDのリスト
 			}
-			while(true) {
-				if(true) {
-					break;
+			first: while(true) {
+				nextGroupId = createId.createId();
+				for(String i:idList) {
+					if( i.equals(nextGroupId)) {
+						continue first;//グループIDがかぶれば、作り直し
+					}
 				}
+				break;//かぶらなければ
 			}
 			
 		}catch(SQLException e){

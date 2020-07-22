@@ -29,12 +29,14 @@
 			</tr>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">管理グループ</th>
-				<td>KBC ITE19</td>
+				<td></td>
 			</tr>
-			<tr class="d-flex">
-				<th scope="row" class="col-2 text-right"></th>
-				<td>KBC 教職員</td>
-			</tr>
+			<c:forEach var="name" items="${groupNameList}">
+				<tr class="d-flex">
+					<th scope="row" class="col-2 text-right"></th>
+					<td><c:out value="${name}"/></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 </div>

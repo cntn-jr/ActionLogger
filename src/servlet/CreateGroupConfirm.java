@@ -12,24 +12,20 @@ import javax.servlet.http.HttpSession;
 
 import dao.GroupDAO;
 import dao.Info_actDAO;
-import dao.UserDAO;
-import model.ErrorViewData;
 import model.GroupMgt;
 import model.InformationAction;
-import model.User;
-import model.ValidationKey;
 
 /**
- * Servlet implementation class SubmitActionConfirm
+ * Servlet implementation class CreateGroupConfirm
  */
-@WebServlet("/SubmitActionConfirm")
-public class SubmitActionConfirm extends HttpServlet {
+@WebServlet("/CreateGroupConfirm")
+public class CreateGroupConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SubmitActionConfirm() {
+    public CreateGroupConfirm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -64,10 +60,10 @@ public class SubmitActionConfirm extends HttpServlet {
 //		}
 		
 		
-		InformationAction log = (InformationAction)session.getAttribute("logAct");
-		Info_actDAO info_actDAO = new Info_actDAO();
-		info_actDAO.save(log);
-		session.removeAttribute("logAct");//セッションスコープの除去
+		GroupMgt group = (GroupMgt)session.getAttribute("group");
+		GroupDAO gdao =  new GroupDAO();
+		gdao.save(group);
+		session.removeAttribute("group");//セッションスコープの除去
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 		dispatcher.forward(request, response);
 	}

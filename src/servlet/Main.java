@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.GroupDAO;
 import dao.Info_actDAO;
+import model.GroupMgt;
 import model.InformationAction;
 /**
  * Servlet implementation class Main
@@ -39,15 +41,20 @@ public class Main extends HttpServlet {
 		String user_id = (String) session.getAttribute("loginUser_id");
 
 		Info_actDAO infoDAO = new Info_actDAO();
+		GroupDAO gdao = new GroupDAO();
+		//新規5件の行動履歴
 		List<InformationAction> easyLogList = new ArrayList<>();
 		easyLogList = infoDAO.getLimit(user_id);
-		
+		//全ての行動履歴
 		List<InformationAction> allLogList = new ArrayList<>();
 		allLogList = infoDAO.getAll(user_id);
-
+		//管理グループのリスト
+		List<String> groupNameList = new ArrayList<>();
+		groupNameList = gdao.getGroupNameList(user_id);
 
 		session.setAttribute("easyLogList", easyLogList);
 		session.setAttribute("allLogList", allLogList);
+		session.setAttribute("groupNameList", groupNameList);
 
 
 
