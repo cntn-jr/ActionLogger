@@ -96,6 +96,10 @@
 				%>
 					<jsp:include page="/WEB-INF/jsp/createGroup.jsp" />
 				<%
+					} else if (view != null && view.equals("entryGroup")) {
+				%>
+					<jsp:include page="/WEB-INF/jsp/entryGroup.jsp" />
+				<%
 					} else {
 				%>
 				<jsp:include page="/WEB-INF/jsp/dashboard.jsp" />

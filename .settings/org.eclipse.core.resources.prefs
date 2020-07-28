@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/jsp/createGroup.jsp=UTF-8
 encoding//src/dao/Info_actDAO.java=UTF-8
 encoding//src/dao/UserDAO.java=UTF-8
 encoding//src/model/LoginLogic.java=UTF-8

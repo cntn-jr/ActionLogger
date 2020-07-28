@@ -58,6 +58,7 @@ public class GroupDAO {
 		return nameList;
 	}
 	
+	//グループIDの取得
 	public String nextGroupId(){
 		List<String> idList = new ArrayList<>();
 		String nextGroupId = null;
@@ -72,7 +73,7 @@ public class GroupDAO {
 				idList.add(id);//データベースに保存されているグループIDのリスト
 			}
 			first: while(true) {
-				nextGroupId = createId.createId();
+				nextGroupId = createId.createId();//ランダム6桁のIDを生成
 				for(String i:idList) {
 					if( i.equals(nextGroupId)) {
 						continue first;//グループIDがかぶれば、作り直し

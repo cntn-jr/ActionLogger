@@ -14,26 +14,19 @@ import javax.servlet.http.HttpSession;
 
 import dao.GroupDAO;
 import dao.Info_actDAO;
+import dao.entryDAO;
 import model.GroupMgt;
 import model.InformationAction;
-/**
- * Servlet implementation class Main
- */
+
 @WebServlet("/")
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public Main() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
@@ -42,6 +35,7 @@ public class Main extends HttpServlet {
 
 		Info_actDAO infoDAO = new Info_actDAO();
 		GroupDAO gdao = new GroupDAO();
+		entryDAO entDAO = new entryDAO();
 		//新規5件の行動履歴
 		List<InformationAction> easyLogList = new ArrayList<>();
 		easyLogList = infoDAO.getLimit(user_id);
@@ -51,10 +45,16 @@ public class Main extends HttpServlet {
 		//管理グループのリスト
 		List<String> groupNameList = new ArrayList<>();
 		groupNameList = gdao.getGroupNameList(user_id);
+		//参加グループのリスト
+		List<String> entryNameList = new ArrayList<>();
+		entryNameList = entDAO.getEntryGroupNameList(user_id); 
+
+		
 
 		session.setAttribute("easyLogList", easyLogList);
 		session.setAttribute("allLogList", allLogList);
 		session.setAttribute("groupNameList", groupNameList);
+		session.setAttribute("entryNameList", entryNameList);
 
 
 
@@ -70,11 +70,8 @@ public class Main extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

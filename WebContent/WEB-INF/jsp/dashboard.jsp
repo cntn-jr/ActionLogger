@@ -21,12 +21,14 @@
 			</tr>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">参加グループ</th>
-				<td>grp01</td>
+				<td></td>
 			</tr>
-			<tr class="d-flex">
-				<th scope="row" class="col-2 text-right"></th>
-				<td>grp02</td>
-			</tr>
+			<c:forEach var="name" items="${entryNameList}">
+				<tr class="d-flex">
+					<th scope="row" class="col-2 text-right"></th>
+					<td><c:out value="${name}"/></td>
+				</tr>
+			</c:forEach>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">管理グループ</th>
 				<td></td>
