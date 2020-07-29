@@ -100,6 +100,10 @@
 				%>
 					<jsp:include page="/WEB-INF/jsp/entryGroup.jsp" />
 				<%
+					} else if (view != null && view.equals("participantLog")) {
+				%>
+					<jsp:include page="/WEB-INF/jsp/participantLog.jsp" />
+				<%
 					} else {
 				%>
 				<jsp:include page="/WEB-INF/jsp/dashboard.jsp" />

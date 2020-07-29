@@ -142,15 +142,43 @@ public class Info_actDAO {
 					nextId = i.toString();
 				}
 				return nextId; 
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}		
+		}
+		
+		//管理しているグループの参加者の行動履歴を取得
+		public List<InformationAction> getParticipantLog(String group_id){
+			InformationAction log= null;
+			List<InformationAction> logList = new ArrayList<InformationAction>();
+			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+				String sql ="SELECT * FROM info_act, entry WHERE info_act.user_id = entry.user_id AND entry.group_id = ?";
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				pStmt.setString(1, group_id);
+				ResultSet rs = pStmt.executeQuery();
 				
-
-				
+				while (rs.next()) {
+					log= new InformationAction();
+					log.setLog_id(rs.getString("log_id"));
+					log.setUser_id(rs.getString("user_id"));
+					log.setDateSbm(rs.getString("date_submit"));
+					log.setOut_datetime(rs.getString("goout_start"));
+					log.setIn_datetime(rs.getString("goout_end"));
+					log.setPlace(rs.getString("place"));
+					log.setReason(rs.getString("reason"));
+					log.setRemarks(rs.getString("remarks"));
+					
+					logList.add(log);
+				}		
 			} catch (SQLException e) {
 				e.printStackTrace();
 				return null;
 			}
-
-			
-			
+			if(logList == null) {
+				return null;
+			}else {
+				return logList;
+			}
 		}
 }

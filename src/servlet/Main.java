@@ -32,6 +32,8 @@ public class Main extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String user_id = (String) session.getAttribute("loginUser_id");
+		String mgtGroup = (String) request.getParameter("mgtGroup");
+		String view = (String) request.getParameter("view");
 
 		Info_actDAO infoDAO = new Info_actDAO();
 		GroupDAO gdao = new GroupDAO();
@@ -43,17 +45,25 @@ public class Main extends HttpServlet {
 		List<InformationAction> allLogList = new ArrayList<>();
 		allLogList = infoDAO.getAll(user_id);
 		//管理グループのリスト
-		List<String> groupNameList = new ArrayList<>();
-		groupNameList = gdao.getGroupNameList(user_id);
+		List<String[]> groupList = new ArrayList<>();
+		groupList = gdao.getGroupList(user_id);
 		//参加グループのリスト
 		List<String> entryNameList = new ArrayList<>();
-		entryNameList = entDAO.getEntryGroupNameList(user_id); 
-
+		entryNameList = entDAO.getEntryGroupNameList(user_id);
 		
+		if(mgtGroup != null) {//選択した管理グループの行動履歴の取得
+			List<InformationAction> participantLogList = new ArrayList<>();
+			participantLogList = infoDAO.getParticipantLog(mgtGroup);
+			session.setAttribute("participantLogList", participantLogList);
+		}
+		
+//		List<InformationAction> participantLogList  = infoDAO.getParticipantLog(mgtGroup);
+//		session.setAttribute("participantLogList", participantLogList);
+
 
 		session.setAttribute("easyLogList", easyLogList);
 		session.setAttribute("allLogList", allLogList);
-		session.setAttribute("groupNameList", groupNameList);
+		session.setAttribute("groupList", groupList);
 		session.setAttribute("entryNameList", entryNameList);
 
 

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.EntryGrp;
-import model.InformationAction;
 
 public class entryDAO {
 	

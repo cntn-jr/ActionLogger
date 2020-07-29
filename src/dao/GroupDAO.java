@@ -38,24 +38,25 @@ public class GroupDAO {
 		return true;
 	}
 	
-	public List<String> getGroupNameList(String user_id){
-		List<String> nameList = new ArrayList<>();
+	public List<String[]> getGroupList(String user_id){
+		List<String[]> groupList = new ArrayList<>();
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			String sql = "SELECT group_name FROM mgt_group where admin_id = ?;";
+			String sql = "SELECT * FROM mgt_group where admin_id = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, user_id);
 			ResultSet rs = pStmt.executeQuery();
-			String gName;
 			while(rs.next()) {
-				gName = rs.getString("group_name");
-				nameList.add(gName);
+				String groupArray[] = new String[2];
+				groupArray[0] = rs.getString("group_id");
+				groupArray[1] = rs.getString("group_name");
+				groupList.add(groupArray);
 			}
 			
 		}catch(SQLException e){
 			e.printStackTrace();
 			return null;
 		}
-		return nameList;
+		return groupList;
 	}
 	
 	//ÉOÉãÅ[ÉvIDÇÃéÊìæ

@@ -33,10 +33,10 @@
 				<th scope="row" class="col-2 text-right">管理グループ</th>
 				<td></td>
 			</tr>
-			<c:forEach var="name" items="${groupNameList}">
+			<c:forEach var="group" items="${groupList}">
 				<tr class="d-flex">
 					<th scope="row" class="col-2 text-right"></th>
-					<td><c:out value="${name}"/></td>
+					<td><c:out value="${group[1]}"/></td>
 				</tr>
 			</c:forEach>
 		</tbody>
