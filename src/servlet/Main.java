@@ -34,6 +34,7 @@ public class Main extends HttpServlet {
 		String user_id = (String) session.getAttribute("loginUser_id");
 		String mgtGroup = (String) request.getParameter("mgtGroup");
 		String view = (String) request.getParameter("view");
+		String search = (String) request.getParameter("search");
 
 		Info_actDAO infoDAO = new Info_actDAO();
 		GroupDAO gdao = new GroupDAO();
@@ -44,6 +45,11 @@ public class Main extends HttpServlet {
 		//全ての行動履歴
 		List<InformationAction> allLogList = new ArrayList<>();
 		allLogList = infoDAO.getAll(user_id);
+		if(search != null){
+			String searchDate = (String) request.getParameter("searchDate");
+			String searchPlace = (String) request.getParameter("searchPlace");
+			allLogList = infoDAO.getSelfConditional(user_id, searchDate, searchPlace);
+		}
 		//管理グループのリスト
 		List<String[]> groupList = new ArrayList<>();
 		groupList = gdao.getGroupList(user_id);
