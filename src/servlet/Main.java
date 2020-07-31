@@ -60,6 +60,12 @@ public class Main extends HttpServlet {
 		if(mgtGroup != null) {//選択した管理グループの行動履歴の取得
 			List<InformationAction> participantLogList = new ArrayList<>();
 			participantLogList = infoDAO.getParticipantLog(mgtGroup);
+			if(search != null){//絞り込み検索があれば、
+				String searchDate = (String) request.getParameter("searchDate");
+				String searchPlace = (String) request.getParameter("searchPlace");
+				participantLogList = infoDAO.getParticipantConditional(mgtGroup, searchDate, searchPlace);
+			}
+			request.setAttribute("mgtGroup", mgtGroup);
 			session.setAttribute("participantLogList", participantLogList);
 		}
 		
