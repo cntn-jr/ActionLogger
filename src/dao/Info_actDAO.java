@@ -86,31 +86,14 @@ public class Info_actDAO {
 			List<InformationAction> logList = new ArrayList<InformationAction>();
 
 			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-
-				String sql;
-				PreparedStatement pStmt;
 				
-				if(!searchDate.equals("") && searchPlace.equals("")) {
-					sql = "SELECT * FROM info_act WHERE user_id = ? AND (goout_start LIKE ? OR goout_end LIKE ?) ORDER BY date_submit;";
-					pStmt = conn.prepareStatement(sql);
-					pStmt.setString(1, user_id);
-					pStmt.setString(2, "%" + searchDate + "%");
-					pStmt.setString(3, "%" + searchDate + "%");
-				}else if(searchDate.equals("") && !searchPlace.equals("")) {			
-					sql = "SELECT * FROM info_act WHERE user_id = ? AND place LIKE ? ORDER BY date_submit;";
-					pStmt = conn.prepareStatement(sql);
-					pStmt.setString(1, user_id);
-					pStmt.setString(2, "%" + searchPlace + "%");
-				}else {
-					sql = "SELECT * FROM info_act WHERE user_id = ? AND (goout_start LIKE ? OR goout_end LIKE ? OR place LIKE ?) ORDER BY date_submit;";
-					pStmt = conn.prepareStatement(sql);
-					pStmt.setString(1, user_id);
-					pStmt.setString(2, "%" + searchDate + "%");
-					pStmt.setString(3, "%" + searchDate + "%");
-					pStmt.setString(4, "%" + searchPlace + "%");
-				}
+				String sql = "SELECT * FROM info_act WHERE user_id = ? AND (goout_start LIKE ? OR goout_end LIKE ?) AND place LIKE ? ORDER BY date_submit;";
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				pStmt.setString(1, user_id);
+				pStmt.setString(2, "%" + searchDate + "%");
+				pStmt.setString(3, "%" + searchDate + "%");
+				pStmt.setString(4, "%" + searchPlace + "%");
 				
-
 				ResultSet rs = pStmt.executeQuery();
 				
 				while (rs.next()) {
