@@ -89,5 +89,27 @@ public class GroupDAO {
 		}
 		return nextGroupId;
 	}
+	
+	//‚»‚ÌƒOƒ‹[ƒv‚ÌŠÇ—Ò‚©‚Ç‚¤‚©‚ğ”»’è
+	public boolean isAdmin(String group_id,String user_id) {
+		String id = null;
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql ="SELECT admin_id FROM mgt_group WHERE group_id = ?;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, group_id);
+			ResultSet rs = pStmt.executeQuery();
+			while(rs.next()) {
+				id = rs.getString("admin_id");
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+		if(id.equals(user_id)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 }

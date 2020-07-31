@@ -65,8 +65,8 @@
 			<li class="nav-item text-nowrap"><c:if
 					test="${loginUserName != null}">
 					<span style="color: white;"><c:out value="${loginUserName}" /></span>
-					<a href="/ActionLogger/Logout"><i class="fas fa-sign-out-alt"></i>ログアウト</a>
-				</c:if></li>
+				</c:if> <a href="/ActionLogger/Logout"><i class="fas fa-sign-out-alt"></i>ログアウト</a>
+			</li>
 		</ul>
 	</nav>
 
@@ -94,15 +94,15 @@
 				<%
 					} else if (view != null && view.equals("createGroup")) {
 				%>
-					<jsp:include page="/WEB-INF/jsp/createGroup.jsp" />
+				<jsp:include page="/WEB-INF/jsp/createGroup.jsp" />
 				<%
 					} else if (view != null && view.equals("entryGroup")) {
 				%>
-					<jsp:include page="/WEB-INF/jsp/entryGroup.jsp" />
+				<jsp:include page="/WEB-INF/jsp/entryGroup.jsp" />
 				<%
 					} else if (view != null && view.equals("participantLog")) {
 				%>
-					<jsp:include page="/WEB-INF/jsp/participantLog.jsp" />
+				<jsp:include page="/WEB-INF/jsp/participantLog.jsp" />
 				<%
 					} else {
 				%>

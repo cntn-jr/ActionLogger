@@ -48,7 +48,7 @@
 
 <h3>最近の行動記録</h3>
 <c:choose>
-<c:when test="${easyLogList != null}">
+<c:when test="${easyLogList[0] != null}">
 	<div class="table-responsive">
 		<table class="table table-striped table-sm">
 			<thead>

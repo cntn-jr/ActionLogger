@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import dao.GroupDAO;
 import dao.Info_actDAO;
 import dao.entryDAO;
+import model.ErrorViewData;
 import model.GroupMgt;
 import model.InformationAction;
 
@@ -57,16 +58,28 @@ public class Main extends HttpServlet {
 		List<String> entryNameList = new ArrayList<>();
 		entryNameList = entDAO.getEntryGroupNameList(user_id);
 		
+		
 		if(mgtGroup != null) {//選択した管理グループの行動履歴の取得
-			List<InformationAction> participantLogList = new ArrayList<>();
-			participantLogList = infoDAO.getParticipantLog(mgtGroup);
-			if(search != null){//絞り込み検索があれば、
-				String searchDate = (String) request.getParameter("searchDate");
-				String searchPlace = (String) request.getParameter("searchPlace");
-				participantLogList = infoDAO.getParticipantConditional(mgtGroup, searchDate, searchPlace);
+			if(gdao.isAdmin(mgtGroup, user_id)) {//グループ管理者かどうか判定
+				List<InformationAction> participantLogList = new ArrayList<>();
+				participantLogList = infoDAO.getParticipantLog(mgtGroup);
+				if(search != null){//絞り込み検索があれば、
+					String searchDate = (String) request.getParameter("searchDate");
+					String searchPlace = (String) request.getParameter("searchPlace");
+					participantLogList = infoDAO.getParticipantConditional(mgtGroup, searchDate, searchPlace);
+				}
+				request.setAttribute("mgtGroup", mgtGroup);
+				session.setAttribute("participantLogList", participantLogList);
+			}else {	
+				//権限がない
+				//表示データを用意する
+				ErrorViewData errorData = new ErrorViewData("問題が発生しました。","トップに戻る","/ActionLogger/Main");
+				request.setAttribute("errorData", errorData);
+				//エラー表示にフォワード
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+				dispatcher.forward(request, response);
+				return;
 			}
-			request.setAttribute("mgtGroup", mgtGroup);
-			session.setAttribute("participantLogList", participantLogList);
 		}
 		
 //		List<InformationAction> participantLogList  = infoDAO.getParticipantLog(mgtGroup);
