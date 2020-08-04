@@ -24,43 +24,54 @@ import model.InputCheckException;
 public class AlterUserInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public AlterUserInfo() {
-        super();
-    }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/alterUserInfo.jsp");
-		dispatcher.forward(request, response);
+	public AlterUserInfo() {
+		super();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String user_id = (String)session.getAttribute("loginUser_id");
-		String name = checkLongInput(request.getParameter("name"));
-		String address = checkLongInput(request.getParameter("address"));
-		String tel = checkPhoneNumber(request.getParameter("tel_number"));
-		String mail = checkMailAddress(request.getParameter("mail"));
-		UserDAO userdao = new UserDAO();
-		userdao.updateInfo(user_id, name, address, tel, mail);
-		session.removeAttribute("user");
-		//mainにフォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
-		dispatcher.forward(request, response);
-		
-		} catch (InputCheckException e) {
-			//表示データを用意する
-			ErrorViewData errorData = new ErrorViewData("フォームに入力された内容に問題がありました。",
-													"入力画面に戻る","/ActionLogger/");
+		boolean checked = (boolean) session.getAttribute("checked");
+		if (checked) {
+			checked = false;
+			session.setAttribute("checked",checked);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/alterUserInfo.jsp");
+			dispatcher.forward(request, response);
+		} else {
+			// 表示データを用意する
+			ErrorViewData errorData = new ErrorViewData("不正なアクセスを検知しました", "入力画面に戻る", "/ActionLogger/");
 			request.setAttribute("errorData", errorData);
-			//エラー表示にフォワード
+			// エラー表示にフォワード
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+			dispatcher.forward(request, response);
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			HttpSession session = request.getSession();
+			String user_id = (String) session.getAttribute("loginUser_id");
+			String name = checkLongInput(request.getParameter("name"));
+			String address = checkLongInput(request.getParameter("address"));
+			String tel = checkPhoneNumber(request.getParameter("tel_number"));
+			String mail = checkMailAddress(request.getParameter("mail"));
+			UserDAO userdao = new UserDAO();
+			userdao.updateInfo(user_id, name, address, tel, mail);
+			session.removeAttribute("user");
+			// mainにフォワード
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
+			dispatcher.forward(request, response);
+
+		} catch (InputCheckException e) {
+			// 表示データを用意する
+			ErrorViewData errorData = new ErrorViewData("フォームに入力された内容に問題がありました。", "入力画面に戻る", "/ActionLogger/");
+			request.setAttribute("errorData", errorData);
+			// エラー表示にフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
 			dispatcher.forward(request, response);
 		}
 
-		
-		
-		
 	}
 
 }

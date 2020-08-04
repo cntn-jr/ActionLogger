@@ -40,6 +40,10 @@ public class Main extends HttpServlet {
 		Info_actDAO infoDAO = new Info_actDAO();
 		GroupDAO gdao = new GroupDAO();
 		entryDAO entDAO = new entryDAO();
+		
+		boolean checked = false;
+		session.setAttribute("checked",checked);
+		
 		//V‹K5Œ‚Ìs“®—š—ğ
 		List<InformationAction> easyLogList = new ArrayList<>();
 		easyLogList = infoDAO.getLimit(user_id);

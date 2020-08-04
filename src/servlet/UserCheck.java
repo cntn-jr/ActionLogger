@@ -41,17 +41,22 @@ public class UserCheck extends HttpServlet {
 		// âΩÇïœçXÇ∑ÇÈÇ©éØï Ç∑ÇÈ
 		String alter = (String) session.getAttribute("alter");
 		LoginLogic lg = new LoginLogic();
+		boolean checked;
 		if (lg.userCheck(user_id, password)) {
 			switch (alter) {
 			case "userInfo":
 				UserDAO udao = new UserDAO();
 				User user = udao.get(user_id);
+				checked = true;
+				session.setAttribute("checked", checked);
 				session.setAttribute("user", user);
 				session.removeAttribute("alter");
 				response.sendRedirect("/ActionLogger/AlterUserInfo");
 				break;
 			case "password":
 				session.removeAttribute("alter");
+				checked = true;
+				session.setAttribute("checked", checked);
 				response.sendRedirect("/ActionLogger/AlterPassword");
 				break;
 			default:
