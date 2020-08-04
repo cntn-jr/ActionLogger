@@ -80,8 +80,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/ActionLogger/UserCheck?alter=userInfo">
               	プロフィール変更
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/ActionLogger/UserCheck?alter=password">
+              	パスワード変更
             </a>
           </li>
         </ul>

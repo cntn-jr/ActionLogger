@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+	<%@ page import="model.User" %>
 <!doctype html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>ActionLogger ログイン</title>
+<title>ActionLogger</title>
 
 <!-- Bootstrap core CSS -->
 <link
@@ -46,44 +46,30 @@
 	<div class="row">
 		<div class="col"></div>
 		<div class="col-8">
-			<form class="form-adduser" action="/ActionLogger/Signup"
+			<form class="form-adduser" action="/ActionLogger/AlterUserInfo"
 				method="post">
-				<h4 h3 mb-3 font-weight-normal>新規ユーザー</h4>
-				<div class="mb-3">
-					<label for="userid">ユーザーID</label> <input type="text"
-						class="form-control" id="userid" name="user_id"
-						placeholder="ユーザーID" 　	required>
-					<div class="invalid-feedback">必須</div>
-				</div>
-				<div class="mb-3">
-					<label for="password">パスワード</label> <input type="password"
-						class="form-control" id="password" name="password"
-						placeholder="パスワード" 　required>
-					<div class="invalid-feedback">必須</div>
-				</div>
+				<h4 h3 mb-3 font-weight-normal>プロフィール変更</h4>
 				<div class="mb-3">
 					<label for="name">氏名</label> <input type="text"
-						class="form-control" id="name" name="name" placeholder="氏名"
+						class="form-control" id="name" name="name" placeholder="氏名" value="${user.name}"
 						　required>
 					<div class="invalid-feedback">必須</div>
 				</div>
 				<div class="mb-3">
-					<label for="address">住所</label> <input type="text"
+					<label for="address">住所</label> <input type="text" value="${user.address}"
 						class="form-control" id="address" name="address" placeholder="住所">
 				</div>
 				<div class="mb-3">
-					<label for="tel">電話番号</label> <input type="text"
+					<label for="tel">電話番号</label> <input type="text" value="${user.tel_number}"
 						class="form-control" id="tel" name="tel_number"
 						placeholder="xxxx-xxxx-xxxx">
 				</div>
-				<%-- フォームの正当性確認データ --%>
-				<input type="hidden" name="vKey" value="${validationKey.value}">
 				<div class="mb-3">
-					<label for="email">メールアドレス</label> <input type="text"
+					<label for="email">メールアドレス</label> <input type="text" value="${user.mail}"
 						class="form-control" id="email" name="mail" placeholder="メールアドレス">
 				</div>
 				<input type="submit" class="btn btn-secondary btn-block btn-lg"
-					id="enterRoom" value="登録"></input>
+					id="enterRoom" value="変更"></input>
 			</form>
 		</div>
 		<div class="col"></div>

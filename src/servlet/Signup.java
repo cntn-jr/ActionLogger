@@ -128,7 +128,7 @@ public class Signup extends HttpServlet {
 		} catch (InputCheckException e) {
 			//表示データを用意する
 			ErrorViewData errorData = new ErrorViewData("フォームに入力された内容に問題がありました。",
-													"入力画面に戻る","/ActionLogger/adduser");
+													"入力画面に戻る","/ActionLogger/Login");
 			request.setAttribute("errorData", errorData);
 			//エラー表示にフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");

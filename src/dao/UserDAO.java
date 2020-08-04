@@ -8,34 +8,26 @@ import java.sql.SQLException;
 
 import model.User;
 
-//DB荳翫�ｮuser繝�繝ｼ繝悶Ν縺ｫ蟇ｾ蠢懊☆繧汽AO
+//IDと一致するuserを返す
 public class UserDAO {
-	// 繝�繝ｼ繧ｿ繝吶�ｼ繧ｹ謗･邯壹↓菴ｿ逕ｨ縺吶ｋ諠�蝣ｱ
 	private final String JDBC_URL = "jdbc:h2:tcp://localhost/~/h2db/ActionLogger";
 	private final String DB_USER = "sa";
 	private final String DB_PASS = "";
 
-	//繝ｦ繝ｼ繧ｶ繝ｼID繧呈欠螳壹＠縺ｦ縲√Θ繝ｼ繧ｶ繝ｼ諠�蝣ｱ繧貞叙蠕�
-	//繝ｦ繝ｼ繧ｶ繝ｼID縺悟ｭ伜惠縺励↑縺�蝣ｴ蜷医�ｯnull繧定ｿ斐☆
 	public User get(String userId) {
 		User user = null;
 
-		// 繝�繝ｼ繧ｿ繝吶�ｼ繧ｹ謗･邯�
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
-			// SELECT譁�縺ｮ貅門ｙ
 			String sql = "SELECT * FROM user WHERE userid = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, userId);
 
-			// SELECT繧貞ｮ溯｡�
 			ResultSet rs = pStmt.executeQuery();
 
-			// SELECT譁�縺ｮ邨先棡繧置ser縺ｫ譬ｼ邏�
 			while (rs.next()) {
 				user = new User();
 				user.setUser_id(rs.getString("userid"));
-				user.setPasswordHash(rs.getString("pwdhash"));
 				user.setName(rs.getString("name"));
 				user.setAddress(rs.getString("address"));
 				user.setTel_number(rs.getString("tel"));
@@ -48,17 +40,35 @@ public class UserDAO {
 		return user;
 	}
 
-	//繝ｦ繝ｼ繧ｶ繝ｼ繧呈欠螳壹＠縺ｦ縲√Θ繝ｼ繧ｶ繝ｼ諠�蝣ｱ繧剃ｿ晏ｭ�
-	//謌ｻ繧雁�､:true 謌仙粥 , false 螟ｱ謨�
-	public boolean save(User user) {
-		// 繝�繝ｼ繧ｿ繝吶�ｼ繧ｹ謗･邯�
+	public User getPass(String userId) {
+		User user = null;
+
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
-			// INSERT譁�縺ｮ貅門ｙ(id縺ｯ閾ｪ蜍暮�｣逡ｪ縺ｪ縺ｮ縺ｧ謖�螳壹＠縺ｪ縺上※繧医＞�ｼ�
+			String sql = "SELECT * FROM user WHERE userid = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				user = new User();
+				user.setPasswordHash(rs.getString("pwdhash"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return user;
+	}
+
+	// ユーザの登録
+	public boolean save(User user) {
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
 			String sql = "INSERT INTO user " + "( userid, pwdhash, name, address, tel, email ) "
 					+ "VALUES ( ?, ?, ?, ?, ?, ? )";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			// INSERT譁�荳ｭ縺ｮ縲�?縲阪↓菴ｿ逕ｨ縺吶ｋ蛟､繧定ｨｭ螳壹＠SQL繧貞ｮ梧��
 			pStmt.setString(1, user.getUser_id());
 			pStmt.setString(2, user.getPasswordHash());
 			pStmt.setString(3, user.getName());
@@ -66,7 +76,6 @@ public class UserDAO {
 			pStmt.setString(5, user.getTel_number());
 			pStmt.setString(6, user.getMail());
 
-			// INSERT譁�繧貞ｮ溯｡�
 			int result = pStmt.executeUpdate();
 			if (result != 1) {
 				return false;
@@ -77,4 +86,47 @@ public class UserDAO {
 		}
 		return true;
 	}
+
+	// ユーザ情報の変更
+	public boolean updateInfo(String user_id, String name, String address, String tel, String mail) {
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			String sql = "UPDATE user SET name = ?, address = ?, tel = ?, email = ? WHERE userid = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, name);
+			pStmt.setString(2, address);
+			pStmt.setString(3, tel);
+			pStmt.setString(4, mail);
+			pStmt.setString(5, user_id);
+
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	// パスワードの変更
+		public boolean updatePass(String user_id, String pwdhash) {
+			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+				String sql = "UPDATE user SET pwdhash = ? WHERE userid = ?";
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				pStmt.setString(1, pwdhash);
+				pStmt.setString(2, user_id);
+
+				int result = pStmt.executeUpdate();
+				if (result != 1) {
+					return false;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
 }

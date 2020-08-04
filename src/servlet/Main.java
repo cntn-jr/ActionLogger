@@ -58,7 +58,6 @@ public class Main extends HttpServlet {
 		List<String> entryNameList = new ArrayList<>();
 		entryNameList = entDAO.getEntryGroupNameList(user_id);
 		
-		
 		if(mgtGroup != null) {//選択した管理グループの行動履歴の取得
 			if(gdao.isAdmin(mgtGroup, user_id)) {//グループ管理者かどうか判定
 				List<InformationAction> participantLogList = new ArrayList<>();
@@ -70,10 +69,9 @@ public class Main extends HttpServlet {
 				}
 				request.setAttribute("mgtGroup", mgtGroup);
 				session.setAttribute("participantLogList", participantLogList);
-			}else {	
-				//権限がない
+			}else {	//グループにアクセスする権限がない
 				//表示データを用意する
-				ErrorViewData errorData = new ErrorViewData("問題が発生しました。","トップに戻る","/ActionLogger/Main");
+				ErrorViewData errorData = new ErrorViewData("アクセス権限がありません。","トップに戻る","/ActionLogger/Main");
 				request.setAttribute("errorData", errorData);
 				//エラー表示にフォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
@@ -95,11 +93,11 @@ public class Main extends HttpServlet {
 
 
 		if (user_id == null) {
-			// MainView繧定｡ｨ遉ｺ
+			// ログインさせる
 			response.sendRedirect("/ActionLogger/Login");
 
 		} else {
-			// MainView繧定｡ｨ遉ｺ
+			// MainViewに飛ぶ
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainView.jsp");
 			dispatcher.forward(request, response);
 		}
