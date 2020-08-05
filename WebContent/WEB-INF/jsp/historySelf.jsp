@@ -7,10 +7,10 @@
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 	<h1 class="h2">Action Log</h1>
 	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary" data-toggle="modal"
+	<p class="btn btn-primary" data-toggle="modal"
 		data-target="#exampleModal"
-		style="background: #eee; color: #111; border: 1px #eee solid; font-weight: bold; user_select: none;">
-		絞り込み</button>
+		style="background: #eee; color: #111; border: 1px #eee solid; font-weight: bold; user-select: none; outline:0; transition: none;">
+		絞り込み</p>
 </div>
 <br>
 <br>

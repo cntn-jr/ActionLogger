@@ -45,11 +45,8 @@ public class UserCheck extends HttpServlet {
 		if (lg.userCheck(user_id, password)) {
 			switch (alter) {
 			case "userInfo":
-				UserDAO udao = new UserDAO();
-				User user = udao.get(user_id);
 				checked = true;
 				session.setAttribute("checked", checked);
-				session.setAttribute("user", user);
 				session.removeAttribute("alter");
 				response.sendRedirect("/ActionLogger/AlterUserInfo");
 				break;

@@ -62,11 +62,9 @@
 		</button>
 		<ul class="navbar-nav px-3">
 			<li class="nav-item text-nowrap"></li>
-			<li class="nav-item text-nowrap"><c:if
-					test="${loginUserName != null}">
-					<span style="color: white;"><c:out value="${loginUserName}" /></span>
-				</c:if> <a href="/ActionLogger/Logout"><i class="fas fa-sign-out-alt"></i>ログアウト</a>
-			</li>
+			<li class="nav-item text-nowrap"><span style="color: white; margin-right:2em;"><c:out
+						value="${user.name} さんがログインしています" /></span> <a href="/ActionLogger/Logout"><i
+					class="fas fa-sign-out-alt"></i>ログアウト</a></li>
 		</ul>
 	</nav>
 
@@ -103,6 +101,10 @@
 					} else if (view != null && view.equals("participantLog")) {
 				%>
 				<jsp:include page="/WEB-INF/jsp/participantLog.jsp" />
+				<%
+					} else if (view != null && view.equals("profile")) {
+				%>
+				<jsp:include page="/WEB-INF/jsp/profile.jsp" />
 				<%
 					} else {
 				%>

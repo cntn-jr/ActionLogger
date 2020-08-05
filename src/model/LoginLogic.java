@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import dao.UserDAO;
 
 public class LoginLogic {
-	public boolean loginLogic(String user_id,String password,HttpSession session) {
+	public boolean loginLogic(String user_id,String password) {
 		String passwordHash = ""; 
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -30,8 +30,6 @@ public class LoginLogic {
 		User userPwd = userDAO.getPass( user_id );
 		
 		if(user != null && userPwd.getPasswordHash().equals(passwordHash)) {
-			session.setAttribute("loginUser_id", user.getUser_id());
-			session.setAttribute("loginUserName", user.getName());
 			return true;
 		}
 		

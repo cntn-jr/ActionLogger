@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.UserDAO;
 import model.LoginLogic;
 import model.User;
 
@@ -44,11 +45,13 @@ public class Login extends HttpServlet {
 				User loginUser = new User(user_id);
 				
 				LoginLogic loginRogic = new LoginLogic();
-				Boolean canLogin = loginRogic.loginLogic(user_id,password,session);//userのパスワードが正しいかチェック
+				Boolean canLogin = loginRogic.loginLogic(user_id,password);//userのパスワードが正しいかチェック
 				
 				if(canLogin == true) {//パスワードが正しければ
-//					session.setAttribute("loginUser_id", canLogin.getUser_id());
-//					session.setAttribute("loginName", canLogin.getName());
+					UserDAO udao = new UserDAO();
+					loginUser = udao.get(user_id);
+					session.setAttribute("loginUser_id", loginUser.getUser_id());
+					session.setAttribute("user", loginUser);
 					response.sendRedirect("/ActionLogger/");
 				}else {
 					response.sendRedirect("/ActionLogger/Login");//もう一度ログイン画面へ

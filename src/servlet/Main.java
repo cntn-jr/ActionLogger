@@ -84,10 +84,6 @@ public class Main extends HttpServlet {
 			}
 		}
 		
-//		List<InformationAction> participantLogList  = infoDAO.getParticipantLog(mgtGroup);
-//		session.setAttribute("participantLogList", participantLogList);
-
-
 		session.setAttribute("easyLogList", easyLogList);
 		session.setAttribute("allLogList", allLogList);
 		session.setAttribute("groupList", groupList);
