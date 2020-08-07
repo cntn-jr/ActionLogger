@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!doctype html>
 <html lang="ja">
@@ -32,24 +33,24 @@
 			<form class="form-adduser" action="/ActionLogger/SignupConfirm"
 				method="post">
 
-				<h4 h3 mb-3 font-weight-normal>新規ユーザー</h4>
+				<h4>新規ユーザー</h4>
 				<div class="mb-3">
-					ユーザーID　: ${newUser.user_id}
+					ユーザーID　: <c:out value="${newUser.user_id}"/>
 				</div>
 				<div class="mb-3">
 					パスワード : *******
 				</div>
 				<div class="mb-3">
-					氏名 : ${newUser.name}
+					氏名 : <c:out value="${newUser.name}"/>
 				</div>
 				<div class="mb-3">
-					住所 : ${newUser.address}
+					住所 : <c:out value="${newUser.address}"/>
 				</div>
 				<div class="mb-3">
-					電話番号 : ${newUser.tel_number}
+					電話番号 : <c:out value="${newUser.tel_number}"/>
 				</div>
 				<div class="mb-3">
-					メールアドレス　: ${newUser.mail}
+					メールアドレス　: <c:out value="${newUser.mail}"/>
 				</div>
 				<%-- フォームの正当性確認データ --%>
 				<input type="hidden" name="vKey" value="${validationKey.value}">

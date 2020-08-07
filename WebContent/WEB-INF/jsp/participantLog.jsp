@@ -5,7 +5,7 @@
 
 <div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">participant Action Log</h1>
+	<h1 class="h2">Participant Action Log</h1>
 	<!-- モーダルを表示させるボタン -->
 	<p class="btn btn-primary" data-toggle="modal"
 		data-target="#exampleModal"
@@ -50,7 +50,7 @@
 </div>
 
 <c:choose>
-	<c:when test="${participantLogList != null}">
+	<c:when test="${participantLogList[0] != null}">
 		<div class="table-responsive">
 			<table class="table table-striped table-sm">
 				<thead>
@@ -65,7 +65,7 @@
 				</thead>
 				<tbody>
 					<c:forEach var="log" items="${participantLogList}">
-						<tr>
+						<tr style="font-weight:500;">
 							<td><c:out value="${log.user_id}" /></td>
 							<td><c:out value="${log.out_datetime}" /></td>
 							<td><c:out value="${log.in_datetime}" /></td>
@@ -79,7 +79,7 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-	ないです
+		<p style="text-align:center; margin-top:2em; font-size:1.5em;">投稿はまだありません</p>
 	</c:otherwise>
 </c:choose>
 

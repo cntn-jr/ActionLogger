@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!doctype html>
 <html lang="ja">
@@ -39,7 +40,7 @@
 <body>
 	<nav
 		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Action
+		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/ActionLogger">Action
 			Logger</a>
 	</nav>
 
@@ -48,12 +49,15 @@
 		<div class="col-8">
 			<form class="form-adduser" action="/ActionLogger/Signup"
 				method="post">
-				<h4 h3 mb-3 font-weight-normal>新規ユーザー</h4>
+				<h4 style="text-align: center; margin-top: 2em;">新規ユーザー</h4>
 				<div class="mb-3">
 					<label for="userid">ユーザーID</label> <input type="text"
 						class="form-control" id="userid" name="user_id"
-						placeholder="ユーザーID" 　	required>
+						placeholder="ユーザーID" value="${rewright.user_id}" required>
 					<div class="invalid-feedback">必須</div>
+					<c:if test="${rewright != null}">
+						<p style="color: red; font-size: 0.8em;">&lowast;このIDは使用されています</p>
+					</c:if>
 				</div>
 				<div class="mb-3">
 					<label for="password">パスワード</label> <input type="password"
@@ -64,23 +68,26 @@
 				<div class="mb-3">
 					<label for="name">氏名</label> <input type="text"
 						class="form-control" id="name" name="name" placeholder="氏名"
-						　required>
+						value="${rewright.name}" 　required>
 					<div class="invalid-feedback">必須</div>
 				</div>
 				<div class="mb-3">
 					<label for="address">住所</label> <input type="text"
-						class="form-control" id="address" name="address" placeholder="住所">
+						class="form-control" id="address" name="address"
+						value="${rewright.address}" placeholder="住所" required>
 				</div>
 				<div class="mb-3">
 					<label for="tel">電話番号</label> <input type="text"
 						class="form-control" id="tel" name="tel_number"
+						value="${rewright.tel_number}" required
 						placeholder="xxxx-xxxx-xxxx">
 				</div>
 				<%-- フォームの正当性確認データ --%>
 				<input type="hidden" name="vKey" value="${validationKey.value}">
 				<div class="mb-3">
 					<label for="email">メールアドレス</label> <input type="text"
-						class="form-control" id="email" name="mail" placeholder="メールアドレス">
+						class="form-control" id="email" name="mail" placeholder="メールアドレス"
+						value="${rewright.mail}" required>
 				</div>
 				<input type="submit" class="btn btn-secondary btn-block btn-lg"
 					id="enterRoom" value="登録"></input>

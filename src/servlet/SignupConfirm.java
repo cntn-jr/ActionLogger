@@ -60,14 +60,15 @@ public class SignupConfirm extends HttpServlet {
 //		}
 		
 		
-		User user = (User)session.getAttribute("newUser");
+		//新規ユーザをデータベースに登録
+		User newUser = (User)session.getAttribute("newUser");
 		UserDAO userDAO = new UserDAO();
-		userDAO.save(user);
-		session.setAttribute("loginUser_id", user.getUser_id());
-		session.setAttribute("loginUserName", user.getName());
-		session.removeAttribute("newUser");//セッションスコープの除去
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
-		dispatcher.forward(request, response);
+		userDAO.save(newUser);
+		session.setAttribute("loginUser_id", newUser.getUser_id());
+		//ユーザIDから新規ユーザの情報を取得
+		User user = userDAO.getInfo(newUser.getUser_id());
+		session.setAttribute("user", user);
+		response.sendRedirect("/ActionLogger");
 	}
 
 }

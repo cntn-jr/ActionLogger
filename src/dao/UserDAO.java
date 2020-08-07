@@ -5,16 +5,18 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.User;
 
-//IDと一致するuserを返す
 public class UserDAO {
 	private final String JDBC_URL = "jdbc:h2:tcp://localhost/~/h2db/ActionLogger";
 	private final String DB_USER = "sa";
 	private final String DB_PASS = "";
 
-	public User get(String userId) {
+	// IDと一致するユーザを返す（パスワード以外）
+	public User getInfo(String userId) {
 		User user = null;
 
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
@@ -109,24 +111,54 @@ public class UserDAO {
 		}
 		return true;
 	}
-	
+
 	// パスワードの変更
-		public boolean updatePass(String user_id, String pwdhash) {
-			try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+	public boolean updatePass(String user_id, String pwdhash) {
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
-				String sql = "UPDATE user SET pwdhash = ? WHERE userid = ?";
-				PreparedStatement pStmt = conn.prepareStatement(sql);
-				pStmt.setString(1, pwdhash);
-				pStmt.setString(2, user_id);
+			String sql = "UPDATE user SET pwdhash = ? WHERE userid = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, pwdhash);
+			pStmt.setString(2, user_id);
 
-				int result = pStmt.executeUpdate();
-				if (result != 1) {
-					return false;
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
 				return false;
 			}
-			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
+		return true;
+	}
+
+	// 登録しようとしているユーザIDにかぶりがないか調べる
+	public boolean isUniqueId(String user_id) {
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			String sql = "SELECT userid FROM user";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			ResultSet rs = pStmt.executeQuery();
+			List<String> idList = new ArrayList<>();
+
+			while (rs.next()) {
+				String id;
+				id = rs.getString("userid");
+				idList.add(id);
+			}
+
+			for (String id : idList) {
+				if (user_id.equals(id)) {
+					return false;
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 }

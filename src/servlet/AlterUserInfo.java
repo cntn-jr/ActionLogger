@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import dao.UserDAO;
 import model.ErrorViewData;
 import model.InputCheckException;
+import model.User;
 
 @WebServlet("/AlterUserInfo")
 public class AlterUserInfo extends HttpServlet {
@@ -58,6 +59,9 @@ public class AlterUserInfo extends HttpServlet {
 			String mail = checkMailAddress(request.getParameter("mail"));
 			UserDAO userdao = new UserDAO();
 			userdao.updateInfo(user_id, name, address, tel, mail);
+			//セッションにユーザ情報をセットしなおす
+			User user = userdao.getInfo(user_id);
+			session.setAttribute("user", user);
 			// mainにフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 			dispatcher.forward(request, response);

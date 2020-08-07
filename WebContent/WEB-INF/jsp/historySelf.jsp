@@ -65,7 +65,7 @@
 				</thead>
 				<tbody>
 					<c:forEach var="log" items="${allLogList}">
-						<tr>
+						<tr style="font-weight:500;">
 							<td><c:out value="${log.out_datetime}" /></td>
 							<td><c:out value="${log.in_datetime}" /></td>
 							<td><c:out value="${log.place}" /></td>

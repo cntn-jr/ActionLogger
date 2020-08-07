@@ -42,13 +42,17 @@
 		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Action
 			Logger</a>
 	</nav>
+	
+	<div
+	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	<h1 class="h2" style="margin-left:5em;">Alter Profile</h1>
+</div>
 
 	<div class="row">
 		<div class="col"></div>
 		<div class="col-8">
 			<form class="form-adduser" action="/ActionLogger/AlterUserInfo"
 				method="post">
-				<h4 h3 mb-3 font-weight-normal>プロフィール変更</h4>
 				<div class="mb-3">
 					<label for="name">氏名</label> <input type="text"
 						class="form-control" id="name" name="name" placeholder="氏名" value="${user.name}"

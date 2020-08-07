@@ -26,10 +26,10 @@ public class LoginLogic {
 		}
 		
 		UserDAO userDAO = new UserDAO();
-		User user = userDAO.get(user_id);
+		User user = userDAO.getInfo(user_id);
 		User userPwd = userDAO.getPass( user_id );
 		
-		if(user != null && userPwd.getPasswordHash().equals(passwordHash)) {
+		if(user.getUser_id() != null && userPwd.getPasswordHash().equals(passwordHash)) {
 			return true;
 		}
 		

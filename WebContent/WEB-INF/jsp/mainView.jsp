@@ -52,8 +52,8 @@
 <body>
 	<nav
 		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Action
-			Logger</a>
+		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
+			href="/ActionLogger">Action Logger</a>
 		<button class="navbar-toggler position-absolute d-md-none collapsed"
 			type="button" data-toggle="collapse" data-target="#sidebarMenu"
 			aria-controls="sidebarMenu" aria-expanded="false"
@@ -62,8 +62,11 @@
 		</button>
 		<ul class="navbar-nav px-3">
 			<li class="nav-item text-nowrap"></li>
-			<li class="nav-item text-nowrap"><span style="color: white; margin-right:2em;"><c:out
-						value="${user.name} さんがログインしています" /></span> <a href="/ActionLogger/Logout"><i
+			<li class="nav-item text-nowrap"><span
+				style="color: #ddd; margin-right: 2em;"><a href></a><a
+					href="/ActionLogger?view=profile" style="color:#ddd; text-decoration:none;"><c:out value="${user.name}" /></a>
+					さんがログインしています</span> <a href="/ActionLogger/Logout"
+				style="color: #8EF1FF; text-decoration: none;"><i
 					class="fas fa-sign-out-alt"></i>ログアウト</a></li>
 		</ul>
 	</nav>

@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>ActionLogger パスワード確認</title>
+<title>ActionLogger パスワード変更</title>
 
 <!-- Bootstrap core CSS -->
 <link
@@ -42,14 +42,16 @@
 		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Action
 			Logger</a>
 	</nav>
+	
+	<div
+	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	<h1 class="h2" style="margin-left:5em;">Alter Password</h1>
+</div>
 
 <div class="row">
 		<div class="col"></div>
 		<div class="col-８">
 			<form class="form-signin" action="/ActionLogger/AlterPassword" method="post">
-				<h4 h3 mb-3 font-weight-normal>
-					パスワード変更
-				</h4>
 				<div class="form-group">
 					パスワード<br> 
 					<input

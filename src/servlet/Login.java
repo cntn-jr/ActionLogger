@@ -49,7 +49,7 @@ public class Login extends HttpServlet {
 				
 				if(canLogin == true) {//パスワードが正しければ
 					UserDAO udao = new UserDAO();
-					loginUser = udao.get(user_id);
+					loginUser = udao.getInfo(user_id);
 					session.setAttribute("loginUser_id", loginUser.getUser_id());
 					session.setAttribute("user", loginUser);
 					response.sendRedirect("/ActionLogger/");
