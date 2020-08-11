@@ -27,10 +27,33 @@ public class UserCheck extends HttpServlet {
 			throws ServletException, IOException {
 		String alter = request.getParameter("alter");
 		HttpSession session = request.getSession();
-		session.setAttribute("alter", alter);
-		// パスワード確認画面に飛ぶ
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userCheck.jsp");
-		dispatcher.forward(request, response);
+		boolean checked = (boolean) session.getAttribute("checked");
+		if (checked) {
+			switch (alter) {
+			case "userInfo":
+				session.removeAttribute("alter");
+				response.sendRedirect("/ActionLogger/AlterUserInfo");
+				break;
+			case "password":
+				session.removeAttribute("alter");
+				response.sendRedirect("/ActionLogger/AlterPassword");
+				break;
+			default:
+				session.setAttribute("alter", null);
+				// 表示データを用意する
+				ErrorViewData errorData = new ErrorViewData("問題が発生しました。", "トップに戻る", "/ActionLogger/Main");
+				request.setAttribute("errorData", errorData);
+				// エラー表示にフォワード
+				RequestDispatcher dispatcher3 = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+				dispatcher3.forward(request, response);
+				return;
+			}
+		} else {
+			session.setAttribute("alter", alter);
+			// パスワード確認画面に飛ぶ
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userCheck.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -58,16 +81,16 @@ public class UserCheck extends HttpServlet {
 				break;
 			default:
 				session.setAttribute("alter", null);
-				//表示データを用意する
-				ErrorViewData errorData = new ErrorViewData("問題が発生しました。","トップに戻る","/ActionLogger/Main");
+				// 表示データを用意する
+				ErrorViewData errorData = new ErrorViewData("問題が発生しました。", "トップに戻る", "/ActionLogger/Main");
 				request.setAttribute("errorData", errorData);
-				//エラー表示にフォワード
+				// エラー表示にフォワード
 				RequestDispatcher dispatcher3 = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
 				dispatcher3.forward(request, response);
 				return;
 			}
-		}else {
-			//パスワードが間違っていたり、不正にアクセスされたら
+		} else {
+			// パスワードが間違っていたり、不正にアクセスされたら
 			RequestDispatcher dispatcher4 = request.getRequestDispatcher("/WEB-INF/jsp/userCheck.jsp");
 			dispatcher4.forward(request, response);
 		}

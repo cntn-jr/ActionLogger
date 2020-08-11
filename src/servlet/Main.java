@@ -42,9 +42,9 @@ public class Main extends HttpServlet {
 		GroupDAO gdao = new GroupDAO();
 		entryDAO entDAO = new entryDAO();
 
-		//プロフィールやパスワード変更をするときの、パスワード確認をしたかどうか
-		boolean checked = false;
-		session.setAttribute("checked", checked);
+//		//プロフィールやパスワード変更をするときの、パスワード確認をしたかどうか
+//		boolean checked = false;
+//		session.setAttribute("checked", checked);
 
 		// 新規5件の行動履歴を取得
 		List<InformationAction> easyLogList = new ArrayList<>();

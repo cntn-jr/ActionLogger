@@ -34,8 +34,6 @@ public class AlterUserInfo extends HttpServlet {
 		HttpSession session = request.getSession();
 		boolean checked = (boolean) session.getAttribute("checked");
 		if (checked) {
-			checked = false;
-			session.setAttribute("checked",checked);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/alterUserInfo.jsp");
 			dispatcher.forward(request, response);
 		} else {

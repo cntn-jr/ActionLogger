@@ -18,44 +18,49 @@ import model.User;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public Login() {
-        super();
-    }
+	public Login() {
+		super();
+	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//セッションスコープからパラメータを取得
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// セッションスコープからパラメータを取得
 		HttpSession session = request.getSession();
-		User loginUser = (User)session.getAttribute("loginUser");
-				
-		if(loginUser == null) {
+		User loginUser = (User) session.getAttribute("loginUser");
+
+		if (loginUser == null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 			dispatcher.forward(request, response);
-		}else {
-			response.sendRedirect("/ActionLogger");//ログイン済み
+		} else {
+			response.sendRedirect("/ActionLogger");// ログイン済み
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//パラメータを取得
-				request.setCharacterEncoding("UTF-8");
-				String user_id = request.getParameter("user_id");
-				String password = request.getParameter("password");
-				HttpSession session = request.getSession();
-				
-				User loginUser = new User(user_id);
-				
-				LoginLogic loginRogic = new LoginLogic();
-				Boolean canLogin = loginRogic.loginLogic(user_id,password);//userのパスワードが正しいかチェック
-				
-				if(canLogin == true) {//パスワードが正しければ
-					UserDAO udao = new UserDAO();
-					loginUser = udao.getInfo(user_id);
-					session.setAttribute("loginUser_id", loginUser.getUser_id());
-					session.setAttribute("user", loginUser);
-					response.sendRedirect("/ActionLogger/");
-				}else {
-					response.sendRedirect("/ActionLogger/Login");//もう一度ログイン画面へ
-				}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// パラメータを取得
+		request.setCharacterEncoding("UTF-8");
+		String user_id = request.getParameter("user_id");
+		String password = request.getParameter("password");
+		HttpSession session = request.getSession();
 
-}
+		User loginUser = new User(user_id);
+
+		LoginLogic loginRogic = new LoginLogic();
+		Boolean canLogin = loginRogic.loginLogic(user_id, password);// userのパスワードが正しいかチェック
+
+		if (canLogin == true) {// パスワードが正しければ
+			UserDAO udao = new UserDAO();
+			loginUser = udao.getInfo(user_id);
+			session.setAttribute("loginUser_id", loginUser.getUser_id());
+			session.setAttribute("user", loginUser);
+			// プロフィールやパスワード変更をするときの、パスワード確認をしたかどうか
+			boolean checked = false;
+			session.setAttribute("checked", checked);
+			response.sendRedirect("/ActionLogger/");
+		} else {
+			response.sendRedirect("/ActionLogger/Login");// もう一度ログイン画面へ
+		}
+
+	}
 }
