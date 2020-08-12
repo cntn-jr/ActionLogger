@@ -26,7 +26,7 @@
       <%-- フォームの正当性確認データ --%>
       <input type="hidden" name="vKey" value="${validationKey.value}">
       <input type="submit" class="btn btn-secondary btn-block btn-lg"
-        id="enterRoom" value="登録"></input>
+        id="enterRoom" value="参加"></input>
   </div>
 </form>
 </div>

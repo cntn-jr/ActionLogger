@@ -29,6 +29,7 @@ public class AlterPassword extends HttpServlet {
 		HttpSession session = request.getSession();
 		boolean checked = (boolean) session.getAttribute("checked");
 		if (checked) {
+			session.setAttribute("checked",false);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/alterPassword.jsp");
 			dispatcher.forward(request, response);
 		} else {
@@ -52,17 +53,18 @@ public class AlterPassword extends HttpServlet {
 				// パスと確認パスが間違っていたら、入力させなおす
 				response.sendRedirect("/ActionLogger/AlterPassword");
 
+			} else {
+				UserDAO udao = new UserDAO();
+
+				// パスワードのハッシュ化
+				MessageDigest digest = MessageDigest.getInstance("SHA-256");
+				digest.reset();
+				digest.update(pass.getBytes("utf8"));
+				String pwdhash = String.format("%064x", new BigInteger(1, digest.digest()));
+
+				udao.updatePass(user_id, pwdhash);
+				response.sendRedirect("/ActionLogger");
 			}
-			UserDAO udao = new UserDAO();
-
-			// パスワードのハッシュ化
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			digest.reset();
-			digest.update(pass.getBytes("utf8"));
-			String pwdhash = String.format("%064x", new BigInteger(1, digest.digest()));
-
-			udao.updatePass(user_id, pwdhash);
-			response.sendRedirect("/ActionLogger");
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}

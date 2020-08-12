@@ -42,17 +42,20 @@
 		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Action
 			Logger</a>
 	</nav>
-	<div class="row">
-		<div class="col"></div>
-		<div class="col-８">
-			<h4 h3 mb-3 font-weight-normal>AcctionLoggerエラー</h4>
-			${errorData.message}<br>
-			<a href="${errorData.link}">${errorData.linkStr}</a>
 
-		</div>
-		<div class="col"></div>
-
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1 class="h2" style="margin-left: 5em;">ActionLogger Error</h1>
 	</div>
+
+	<div style="text-align: center;">
+		<div style="margin: 5em auto; font-size:1.3em;">${errorData.message}</div>
+		<div style="margin: 8em auto;">
+			<a href="${errorData.link}" style="text-decoration:none;">${errorData.linkStr}</a>
+		</div>
+	</div>
+
+
 </body>
 
 </html>

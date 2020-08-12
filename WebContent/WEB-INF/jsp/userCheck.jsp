@@ -39,22 +39,22 @@
 <body>
 	<nav
 		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Action
+		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/ActionLogger/">Action
 			Logger</a>
 	</nav>
 
-<div class="row">
+<div class="row" style="margin-top: 4em;">
 		<div class="col"></div>
 		<div class="col-８">
 			<form class="form-signin" action="/ActionLogger/UserCheck" method="post">
-				<h4 h3 mb-3 font-weight-normal>
+				<h4 h3 mb-3 font-weight-normal style="margin-bottom: 1em;">
 					パスワード確認
 				</h4>
 				<div class="form-group">
 					パスワード<br> 
 					<input
 						type="password" class="form-control" name="password"
-						placeholder="パスワード" required>
+						placeholder="パスワード" required style="margin-bottom: 2em;">
 				</div>
 				<input type="submit" class="btn btn-secondary btn-block btn-lg" id="login" value="確認"></input>
 			</form>
