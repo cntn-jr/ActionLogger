@@ -2,20 +2,38 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<style>
+#modalButton {
+	background: #eee;
+	color: #111;
+	border: 1px #eee solid;
+	font-weight: bold;
+	user-select: none;
+	outline: 0;
+	transition: none;
+}
+
+#notAction {
+	text-align: center;
+	font-size: 1.2em;
+	margin-top: 100px;
+}
+
+.searchArea {
+	margin: 2em auto;
+	text-align: center;
+}
+</style>
 
 <div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 	<h1 class="h2">Action Log</h1>
 	<!-- Button trigger modal -->
-	<p class="btn btn-primary" data-toggle="modal"
-		data-target="#exampleModal"
-		style="background: #eee; color: #111; border: 1px #eee solid; font-weight: bold; user-select: none; outline:0; transition: none;">
-		絞り込み</p>
+	<p id="modalButton" class="btn btn-primary" data-toggle="modal"
+		data-target="#exampleModal">絞り込み</p>
 </div>
-<br>
-<br>
-
-
+<br />
+<br />
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -31,16 +49,16 @@
 			<div class="modal-body">
 				<!--中身-->
 				<form action="/ActionLogger/" method="get">
-					<div style="margin: 2em auto; text-align: center;">
+					<div class="searchArea">
 						場所：<input type="text" name="searchPlace" placeholder="場所" value=""
-							style="width: 15em;">
+							style="width: 15em;" />
 					</div>
-					<div style="margin: 2em auto; text-align: center;">
+					<div class="searchArea">
 						日付：<input type="date" name="searchDate" placeholder="日付" value=""
-							style="width: 15em;">
+							style="width: 15em;" />
 					</div>
-					<input type="hidden" name="view" value="activities"> <input
-						type="hidden" name="search" value="search">
+					<input type="hidden" name="view" value="activities" /> <input
+						type="hidden" name="search" value="search" />
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary">検索</button>
 					</div>
@@ -51,7 +69,7 @@
 </div>
 
 <c:choose>
-	<c:when test="${allLogList != null}">
+	<c:when test="${allLogList[0] != null}">
 		<div class="table-responsive">
 			<table class="table table-striped table-sm">
 				<thead>
@@ -65,7 +83,7 @@
 				</thead>
 				<tbody>
 					<c:forEach var="log" items="${allLogList}">
-						<tr style="font-weight:500;">
+						<tr style="font-weight: 500;">
 							<td><c:out value="${log.out_datetime}" /></td>
 							<td><c:out value="${log.in_datetime}" /></td>
 							<td><c:out value="${log.place}" /></td>
@@ -78,12 +96,12 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-	ないです
+		<p id="notAction">登録されていません</p>
 	</c:otherwise>
 </c:choose>
 
 <script>
-	$('#myModal').on('shown.bs.modal', function() {
-		$('#myInput').trigger('focus')
-	})
+	$("#myModal").on("shown.bs.modal", function() {
+		$("#myInput").trigger("focus");
+	});
 </script>

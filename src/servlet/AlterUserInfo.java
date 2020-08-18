@@ -66,7 +66,7 @@ public class AlterUserInfo extends HttpServlet {
 
 		} catch (InputCheckException e) {
 			// 表示データを用意する
-			ErrorViewData errorData = new ErrorViewData("フォームに入力された内容に問題がありました。", "入力画面に戻る", "/ActionLogger/");
+			ErrorViewData errorData = new ErrorViewData("フォームに入力された内容に問題がありました。", "入力画面に戻る", "/ActionLogger/AlterUserInfo");
 			request.setAttribute("errorData", errorData);
 			// エラー表示にフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");

@@ -66,10 +66,8 @@
 				</div>
 				<input type="submit" class="btn btn-secondary btn-block btn-lg" id="login" value="確認"></input>
 			</form>
-			
 		</div>
 		<div class="col"></div>
-		
 	</div>
 	</body>
 	</html>

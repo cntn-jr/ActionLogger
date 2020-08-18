@@ -31,10 +31,10 @@ public class Main extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		session.removeAttribute("newUser");//サインアップの時のセッションスコープの除去
+		session.removeAttribute("newUser");// サインアップの時のセッションスコープの除去
 
 		String user_id = (String) session.getAttribute("loginUser_id");
-		String mgtGroup = (String) request.getParameter("mgtGroup");
+		String mgtGroup = (String) request.getParameter("mgtGroup");//表示するグループのグループID
 		String view = (String) request.getParameter("view");
 		String search = (String) request.getParameter("search");
 
@@ -42,37 +42,37 @@ public class Main extends HttpServlet {
 		GroupDAO gdao = new GroupDAO();
 		entryDAO entDAO = new entryDAO();
 
-//		//プロフィールやパスワード変更をするときの、パスワード確認をしたかどうか
-//		boolean checked = false;
-//		session.setAttribute("checked", checked);
-
 		// 新規5件の行動履歴を取得
 		List<InformationAction> easyLogList = new ArrayList<>();
 		easyLogList = infoDAO.getLimit(user_id);
 		session.setAttribute("easyLogList", easyLogList);
 
 		// 自分の行動履歴を取得
-		List<InformationAction> allLogList = new ArrayList<>();
-		allLogList = infoDAO.getAll(user_id);
-		if (search != null) {
-			String searchDate = (String) request.getParameter("searchDate");
-			String searchPlace = (String) request.getParameter("searchPlace");
-			allLogList = infoDAO.getSelfConditional(user_id, searchDate, searchPlace);
+		if (view != null && view.equals("activities")) {
+			List<InformationAction> allLogList = new ArrayList<>();
+			allLogList = infoDAO.getAll(user_id);
+			if (search != null) {
+				String searchDate = (String) request.getParameter("searchDate");
+				String searchPlace = (String) request.getParameter("searchPlace");
+				allLogList = infoDAO.getSelfConditional(user_id, searchDate, searchPlace);
+			}
+			session.setAttribute("allLogList", allLogList);
 		}
-		session.setAttribute("allLogList", allLogList);
 
-		// 管理グループのリストを取得
+		// 管理グループの情報のリストを取得
 		List<String[]> groupList = new ArrayList<>();
 		groupList = gdao.getGroupList(user_id);
 		session.setAttribute("groupList", groupList);
 
-		// 参加グループのリストを取得
+		// 参加グループの情報のリストを取得
 		List<String> entryNameList = new ArrayList<>();
 		entryNameList = entDAO.getEntryGroupNameList(user_id);
 		session.setAttribute("entryNameList", entryNameList);
 
-		if (mgtGroup != null) {// 選択した管理グループの行動履歴の取得
-			if (gdao.isAdmin(mgtGroup, user_id)) {// グループ管理者かどうか判定
+		// 選択した管理グループの行動履歴の取得
+		if (mgtGroup != null) {
+			// グループ管理者かどうか判定
+			if (gdao.isAdmin(mgtGroup, user_id)) {
 				List<InformationAction> participantLogList = new ArrayList<>();
 				participantLogList = infoDAO.getParticipantLog(mgtGroup);
 				if (search != null) {// 絞り込み検索があれば、
