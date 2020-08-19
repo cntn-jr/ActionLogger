@@ -4,16 +4,36 @@
 <style>
 #submitContainer {
 	padding: 0;
-	width: 700px;
+	width: 500px;
 	margin: 0 auto;
+	font-weight: 600;
 }
 
 .timeBox {
 	display: flex;
 }
 
-.timeArea{
-	padding: 1em;
+.timeArea, .textBox {
+	padding: 15px;
+}
+
+input[type="date"], input[type="time"] {
+	width: 200px;
+	outline: none;
+}
+
+input[type='text'], textarea {
+	width: 430px;
+	outline: none;
+}
+
+input[type='text'] {
+	height: 40px;
+}
+
+textarea {
+	resize: none;
+	height: 100px;
 }
 </style>
 
@@ -32,24 +52,25 @@
 				<input type="time" class="" name="out_time" required />
 			</div>
 		</div>
-		<div>
-			<label>帰宅日時</label>
-			<div>
+		<label>帰宅日時</label>
+		<div class="timeBox">
+			<div class="timeArea">
 				<input type="date" class="" name="in_date" required />
 			</div>
-			<div>
+			<div class="timeArea">
 				<input type="time" class="" name="in_time" required />
 			</div>
 		</div>
-		<div>
-			<label>場所</label> <input type="text" class="" name="place" required />
+		<label>場所</label>
+		<div class="textBox">
+			<input type="text" class="" name="place" required />
 		</div>
-		<div>
-			<label for="">理由</label>
+		<label for="">理由</label>
+		<div class="textBox">
 			<textarea required name="reason"></textarea>
 		</div>
-		<div>
-			<label for="">備考</label>
+		<label for="">備考</label>
+		<div class="textBox">
 			<textarea class="" name="remarks"></textarea>
 		</div>
 		<button type="submit" class="btn btn-primary">送信</button>
