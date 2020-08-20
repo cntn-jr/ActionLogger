@@ -46,33 +46,33 @@ textarea {
 		<label>外出日時</label>
 		<div class="timeBox">
 			<div class="timeArea">
-				<input type="date" class="" name="out_date" required />
+				<input type="date" class="" name="out_date" value="" required />
 			</div>
 			<div class="timeArea">
-				<input type="time" class="" name="out_time" required />
+				<input type="time" class="" name="out_time" value="" required />
 			</div>
 		</div>
 		<label>帰宅日時</label>
 		<div class="timeBox">
 			<div class="timeArea">
-				<input type="date" class="" name="in_date" required />
+				<input type="date" class="" name="in_date" value="" required />
 			</div>
 			<div class="timeArea">
-				<input type="time" class="" name="in_time" required />
+				<input type="time" class="" name="in_time" value="" required />
 			</div>
 		</div>
 		<label>場所</label>
 		<div class="textBox">
-			<input type="text" class="" name="place" required />
+			<input type="text" class="" name="place" value="" required />
 		</div>
 		<label for="">理由</label>
 		<div class="textBox">
-			<textarea required name="reason"></textarea>
+			<textarea required name="reason" value=""></textarea>
 		</div>
 		<label for="">備考</label>
 		<div class="textBox">
-			<textarea class="" name="remarks"></textarea>
+			<textarea class="" name="remarks" value=""></textarea>
 		</div>
-		<button type="submit" class="btn btn-primary">送信</button>
+		<button type="submit" class="btn btn-primary">確認</button>
 	</form>
 </div>

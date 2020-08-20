@@ -48,7 +48,7 @@
 			</div>
 			<div class="modal-body">
 				<!--中身-->
-				<form action="/ActionLogger/" method="get">
+				<form action="/ActionLogger/?" method="get">
 					<div class="searchArea">
 						場所：<input type="text" name="searchPlace" placeholder="場所" value=""
 							style="width: 15em;" />
