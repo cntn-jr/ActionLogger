@@ -33,8 +33,8 @@ public class Info_actDAO {
 				log.setLog_id(rs.getString("log_id"));
 				log.setUser_id(rs.getString("user_id"));
 				log.setDateSbm(rs.getString("date_submit"));
-				log.setOut_datetime(rs.getString("goout_start"));
-				log.setIn_datetime(rs.getString("goout_end"));
+				log.setOut_datetime(rs.getString("goout_start").substring(0, 16));
+				log.setIn_datetime(rs.getString("goout_end").substring(0, 16));
 				log.setPlace(rs.getString("place"));
 				log.setReason(rs.getString("reason"));
 				log.setRemarks(rs.getString("remarks"));
@@ -65,8 +65,8 @@ public class Info_actDAO {
 				log.setLog_id(rs.getString("log_id"));
 				log.setUser_id(rs.getString("user_id"));
 				log.setDateSbm(rs.getString("date_submit"));
-				log.setOut_datetime(rs.getString("goout_start"));
-				log.setIn_datetime(rs.getString("goout_end"));
+				log.setOut_datetime(rs.getString("goout_start").substring(0, 16));
+				log.setIn_datetime(rs.getString("goout_end").substring(0, 16));
 				log.setPlace(rs.getString("place"));
 				log.setReason(rs.getString("reason"));
 				log.setRemarks(rs.getString("remarks"));
@@ -103,8 +103,8 @@ public class Info_actDAO {
 				log.setLog_id(rs.getString("log_id"));
 				log.setUser_id(rs.getString("user_id"));
 				log.setDateSbm(rs.getString("date_submit"));
-				log.setOut_datetime(rs.getString("goout_start"));
-				log.setIn_datetime(rs.getString("goout_end"));
+				log.setOut_datetime(rs.getString("goout_start").substring(0, 16));
+				log.setIn_datetime(rs.getString("goout_end").substring(0, 16));
 				log.setPlace(rs.getString("place"));
 				log.setReason(rs.getString("reason"));
 				log.setRemarks(rs.getString("remarks"));
@@ -185,8 +185,8 @@ public class Info_actDAO {
 				log.setLog_id(rs.getString("log_id"));
 				log.setUser_id(rs.getString("user_id"));
 				log.setDateSbm(rs.getString("date_submit"));
-				log.setOut_datetime(rs.getString("goout_start"));
-				log.setIn_datetime(rs.getString("goout_end"));
+				log.setOut_datetime(rs.getString("goout_start").substring(0, 16));
+				log.setIn_datetime(rs.getString("goout_end").substring(0, 16));
 				log.setPlace(rs.getString("place"));
 				log.setReason(rs.getString("reason"));
 				log.setRemarks(rs.getString("remarks"));
@@ -221,8 +221,8 @@ public class Info_actDAO {
 				log.setLog_id(rs.getString("log_id"));
 				log.setUser_id(rs.getString("user_id"));
 				log.setDateSbm(rs.getString("date_submit"));
-				log.setOut_datetime(rs.getString("goout_start"));
-				log.setIn_datetime(rs.getString("goout_end"));
+				log.setOut_datetime(rs.getString("goout_start").substring(0, 16));
+				log.setIn_datetime(rs.getString("goout_end").substring(0, 16));
 				log.setPlace(rs.getString("place"));
 				log.setReason(rs.getString("reason"));
 				log.setRemarks(rs.getString("remarks"));
