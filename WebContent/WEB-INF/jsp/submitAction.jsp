@@ -35,6 +35,18 @@ textarea {
 	resize: none;
 	height: 100px;
 }
+
+.btn {
+	color: #fff;
+	background-color: #545b62;
+	border-color: #4e555b;
+	border-radius: 10px;
+	height: 40px;
+	width: 100px;
+	font-weight: bold;
+	margin: 10px 0;
+	font-size: 0.8em;
+}
 </style>
 
 <div
@@ -73,6 +85,6 @@ textarea {
 		<div class="textBox">
 			<textarea class="" name="remarks" value=""></textarea>
 		</div>
-		<button type="submit" class="btn btn-primary">確認</button>
+		<button type="submit" class="btn">確認</button>
 	</form>
 </div>

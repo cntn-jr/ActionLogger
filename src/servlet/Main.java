@@ -65,9 +65,9 @@ public class Main extends HttpServlet {
 		session.setAttribute("groupList", groupList);
 
 		// 参加グループの情報のリストを取得
-		List<String> entryNameList = new ArrayList<>();
-		entryNameList = entDAO.getEntryGroupNameList(user_id);
-		session.setAttribute("entryNameList", entryNameList);
+		List<GroupMgt> entryGroupList = new ArrayList<>();
+		entryGroupList = entDAO.getEntryGroupNameList(user_id);
+		session.setAttribute("entryGroupList", entryGroupList);
 
 		// 選択した管理グループの行動履歴の取得
 		if (mgtGroup != null) {
@@ -91,6 +91,14 @@ public class Main extends HttpServlet {
 				dispatcher.forward(request, response);
 				return;
 			}
+		}
+		
+		//グループの情報を取得
+		if(view != null && view.equals("groupInfo")) {
+			GroupMgt selectGroup = new GroupMgt();
+			String select_id = request.getParameter("selectGroup");
+			selectGroup = gdao.getGroup(select_id);
+			session.setAttribute("selectGroup", selectGroup);
 		}
 
 		if (user_id == null) {

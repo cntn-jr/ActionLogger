@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.EntryGrp;
+import model.GroupMgt;
 
 public class entryDAO {
 
@@ -19,10 +20,11 @@ public class entryDAO {
 	public boolean save(EntryGrp entry) {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
-			String sql = "INSERT INTO entry " + "( user_id, group_id ) " + "VALUES ( ?, ? )";
+			String sql = "INSERT INTO entry " + "( user_id, group_id, isentry ) " + "VALUES ( ?, ?, ? )";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, entry.getUser_id());
 			pStmt.setString(2, entry.getGroup_id());
+			pStmt.setBoolean(3, true);
 
 			int result = pStmt.executeUpdate();
 
@@ -36,29 +38,91 @@ public class entryDAO {
 		return true;
 	}
 
-	// 参加しているグループの名前のリストを返す
-	public List<String> getEntryGroupNameList(String user_id) {
-		List<String> nameList = new ArrayList<>();
+	// 参加しているグループのリストを返す
+	public List<GroupMgt> getEntryGroupNameList(String user_id) {
+		List<GroupMgt> groupList = new ArrayList<>();
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			String sql = "SELECT mgt_group.group_name FROM mgt_group,entry where entry.user_id = ? AND mgt_group.group_id = entry.group_id;";
+			String sql = "SELECT * FROM mgt_group,entry "
+					+ "where entry.user_id = ? AND mgt_group.group_id = entry.group_id AND entry.isentry = true;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, user_id);
 			ResultSet rs = pStmt.executeQuery();
-			String groupName;
+			GroupMgt group;
 			while (rs.next()) {
-				groupName = rs.getString("group_name");
-				nameList.add(groupName);
+				group = new GroupMgt();
+				group.setGroup_id(rs.getString("mgt_group.group_id"));
+				group.setGroup_name(rs.getString("mgt_group.group_name"));
+				groupList.add(group);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		return nameList;
+		return groupList;
 	}
 
 	// 参加しようとしているグループに既に参加しているか確認(参加できればtrue)
 	public boolean ableEntry(String user_id, String group_id) {
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "SELECT * FROM ENTRY WHERE user_id = ? AND group_id = ? AND isentry = true;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, user_id);
+			pStmt.setString(2, group_id);
+			ResultSet rs = pStmt.executeQuery();
+			String id = null;
+			while (rs.next()) {
+				id = rs.getString("group_id");
+			}
+			if (id == null) {
+				// 参加していなければ、
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	// グループの退会
+	public boolean leave(String user_id, String group_id) {
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "UPDATE entry SET isentry = false " + "WHERE user_id = ? AND group_id = ?;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, user_id);
+			pStmt.setString(2, group_id);
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	// グループの参加し直し
+	public boolean re_entry(String user_id, String group_id) {
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "UPDATE entry SET isentry = true " + "WHERE user_id = ? AND group_id = ?;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, user_id);
+			pStmt.setString(2, group_id);
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	// データが既に登録してあるかどうか
+	public boolean isData(String user_id, String group_id) {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 			String sql = "SELECT * FROM ENTRY WHERE user_id = ? AND group_id = ?;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -69,8 +133,8 @@ public class entryDAO {
 			while (rs.next()) {
 				id = rs.getString("group_id");
 			}
-			if (id == null) {
-				// 既に参加していなければ、
+			if (id != null) {
+				// 登録していれば、
 				return true;
 			}
 			return false;

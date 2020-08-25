@@ -5,7 +5,16 @@ import java.io.Serializable;
 public class EntryGrp implements Serializable{
 	
 	String entry_id,user_id,group_id;
+	boolean isEntry;
 	
+	public boolean isEntry() {
+		return isEntry;
+	}
+
+	public void setEntry(boolean isEntry) {
+		this.isEntry = isEntry;
+	}
+
 	public EntryGrp() {}
 
 	public String getEntry_id() {

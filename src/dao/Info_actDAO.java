@@ -175,7 +175,7 @@ public class Info_actDAO {
 		InformationAction log = null;
 		List<InformationAction> logList = new ArrayList<InformationAction>();
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			String sql = "SELECT * FROM info_act, entry WHERE info_act.user_id = entry.user_id AND entry.group_id = ?";
+			String sql = "SELECT * FROM info_act, entry WHERE info_act.user_id = entry.user_id AND entry.group_id = ? AND entry.isentry = true";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, group_id);
 			ResultSet rs = pStmt.executeQuery();
@@ -208,7 +208,8 @@ public class Info_actDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 			String sql = "SELECT * FROM info_act, entry "
 					+ "WHERE info_act.user_id = entry.user_id AND entry.group_id = ? "
-					+ "AND (info_act.goout_start LIKE ? OR info_act.goout_end LIKE ?) AND info_act.place LIKE ? ";
+					+ "AND (info_act.goout_start LIKE ? OR info_act.goout_end LIKE ?) "
+					+ "AND info_act.place LIKE ? AND entry.isentry = true";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, group_id);
 			pStmt.setString(2, "%" + searchDate + "%");

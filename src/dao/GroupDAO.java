@@ -132,4 +132,23 @@ public class GroupDAO {
 		}
 	}
 
+	// ‚P‚Â‚ÌƒOƒ‹[ƒv‚Ìî•ñ‚ğæ“¾
+	public GroupMgt getGroup(String group_id) {
+		GroupMgt group = new GroupMgt();
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "SELECT * FROM mgt_group WHERE group_id = ?;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, group_id);
+			ResultSet rs = pStmt.executeQuery();
+			while(rs.next()) {
+				group.setGroup_id(rs.getString("group_id"));
+				group.setGroup_name(rs.getString("group_name"));
+				group.setAdmin_id(rs.getString("admin_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return group;
+	}
 }

@@ -109,6 +109,10 @@
 				%>
 				<jsp:include page="/WEB-INF/jsp/profile.jsp" />
 				<%
+					} else if (view != null && view.equals("groupInfo")) {
+				%>
+				<jsp:include page="/WEB-INF/jsp/entryGroupInfo.jsp" />
+				<%
 					} else {
 				%>
 				<jsp:include page="/WEB-INF/jsp/dashboard.jsp" />

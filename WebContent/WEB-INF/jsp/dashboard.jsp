@@ -53,11 +53,11 @@
 			<td></td>
 		</tr>
 		<c:choose>
-			<c:when test="${entryNameList[0] != null}">
-				<c:forEach var="name" items="${entryNameList}">
+			<c:when test="${entryGroupList[0] != null}">
+				<c:forEach var="group" items="${entryGroupList}">
 					<tr>
 						<th></th>
-						<td><c:out value="${name}" /></td>
+						<td><c:out value="${group.group_name}" /></td>
 					</tr>
 				</c:forEach>
 			</c:when>
