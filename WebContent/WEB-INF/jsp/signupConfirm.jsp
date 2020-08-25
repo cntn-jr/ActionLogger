@@ -21,6 +21,19 @@
 <!-- Custom styles for this template -->
 <link href="/GuiWork/css/dashboard.css" rel="stylesheet">
 </head>
+<style>
+.btn {
+	color: #fff;
+	background-color: #778beb;
+	border-color: #546de5;
+}
+
+.btn:hover {
+	color: #fff;
+	background-color: #778beb;
+	border-color: #546de5;
+}
+</style>
 <body>
 	<nav
 		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">

@@ -57,6 +57,7 @@ public class Login extends HttpServlet {
 			// プロフィールやパスワード変更をするときの、パスワード確認をしたかどうか
 			boolean checked = false;
 			session.setAttribute("checked", checked);
+			session.setAttribute("alter", null);
 			response.sendRedirect("/ActionLogger/");
 		} else {
 			response.sendRedirect("/ActionLogger/Login");// もう一度ログイン画面へ

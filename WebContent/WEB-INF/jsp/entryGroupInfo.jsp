@@ -44,6 +44,12 @@ td, th {
 	margin: 20px auto;
 	font-size: 0.8em;
 }
+
+.btn:hover{
+	color: #fff;
+	background-color: #778beb;
+	border-color: #546de5;
+}
 </style>
 
 <div
