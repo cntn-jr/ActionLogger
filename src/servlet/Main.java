@@ -34,13 +34,13 @@ public class Main extends HttpServlet {
 		session.removeAttribute("newUser");// サインアップの時のセッションスコープの除去
 
 		String user_id = (String) session.getAttribute("loginUser_id");
-		String mgtGroup = (String) request.getParameter("mgtGroup");//表示するグループのグループID
+		String mgtGroup = (String) request.getParameter("mgtGroup");// 表示するグループのグループID
 		String view = (String) request.getParameter("view");
 		String search = (String) request.getParameter("search");
 
 		Info_actDAO infoDAO = new Info_actDAO();
 		GroupDAO gdao = new GroupDAO();
-		entryDAO entDAO = new entryDAO();
+		entryDAO etdao = new entryDAO();
 
 		// 新規5件の行動履歴を取得
 		List<InformationAction> easyLogList = new ArrayList<>();
@@ -66,7 +66,7 @@ public class Main extends HttpServlet {
 
 		// 参加グループの情報のリストを取得
 		List<GroupMgt> entryGroupList = new ArrayList<>();
-		entryGroupList = entDAO.getEntryGroupNameList(user_id);
+		entryGroupList = etdao.getEntryGroupNameList(user_id);
 		session.setAttribute("entryGroupList", entryGroupList);
 
 		// 選択した管理グループの行動履歴の取得
@@ -92,13 +92,16 @@ public class Main extends HttpServlet {
 				return;
 			}
 		}
-		
-		//グループの情報を取得
-		if(view != null && view.equals("groupInfo")) {
+
+		// グループの情報を取得
+		if (view != null && view.equals("groupInfo")) {
 			GroupMgt selectGroup = new GroupMgt();
 			String select_id = request.getParameter("selectGroup");
 			selectGroup = gdao.getGroup(select_id);
 			session.setAttribute("selectGroup", selectGroup);
+			// 情報を表示するグループに参加しているかどうかをスコープに保存
+			boolean alreadyEntry = etdao.alreadyEntry(user_id, select_id);
+			session.setAttribute("alreadyEntry", alreadyEntry);
 		}
 
 		if (user_id == null) {

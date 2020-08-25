@@ -11,7 +11,7 @@
 	padding-top: 1em;
 	padding-bottom: 1em;
 	border-radius: 10px;
-	background: #444;
+	background: #303952;
 	color: #ddd;
 }
 
@@ -31,6 +31,18 @@ th {
 
 td, th {
 	padding: 1em;
+}
+
+.btn {
+	color: #fff;
+	background-color: #778beb;
+	border-color: #546de5;
+	border-radius: 10px;
+	height: 40px;
+	width: 400px;
+	font-weight: bold;
+	margin: 20px auto;
+	font-size: 0.8em;
 }
 </style>
 
@@ -54,4 +66,16 @@ td, th {
 			<td><c:out value="${selectGroup.admin_id}" /></td>
 		</tr>
 	</table>
+	
+	<form action="/ActionLogger/EntryGroup?group_id=${selectGroup.group_id}"
+	method="post">
+	<c:choose>
+		<c:when test="${alreadyEntry}">
+			<input type="submit" value="退会" class="btn">
+		</c:when>
+		<c:otherwise>
+			<input type="submit" value="参加" class="" btn>
+		</c:otherwise>
+	</c:choose>
+</form>
 </div>

@@ -34,39 +34,42 @@ public class EntryGroup extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		EntryGrp entry = new EntryGrp();
-		entryDAO etDAO = new entryDAO();
+		entryDAO etdao = new entryDAO();
 		GroupDAO gdao = new GroupDAO();
 		String user_id = (String) session.getAttribute("loginUser_id");
 		String group_id = request.getParameter("group_id");
 
-		// 時間があれば、組み込む
-//		if(!etDAO.confirmAdimnGroup(user_id, request.getParameter("group_id"))) {
-//			//参加するグループを既に管理していなければ、...
-//			//情報のセット
-//			entry.setGroup_id(request.getParameter("group_id"));
-//			entry.setUser_id(user_id);
-//			
-//			//データベースに保存
-//			etDAO.save(entry);
-//		}else {
-//			String view = "entryGroup";
-//			request.setAttribute("view", view);
-//		}
+		// 参加しようとするグループが存在しているか、確認
+		if (gdao.isGroup(group_id)) {
 
-		// 参加しようとするグループが存在しているかつ、すでに参加してないか確認
-		if (gdao.isGroup(group_id) && etDAO.ableEntry(user_id, group_id)) {
+			// グループに現在、参加しているか確認
+			if (etdao.alreadyEntry(user_id, group_id)) {
 
-			// 情報のセット
-			entry.setGroup_id(group_id);
-			entry.setUser_id(user_id);
+				// 既に参加しているので、退会させる
+				etdao.leave(user_id, group_id);
+			} else {
 
-			// データベースに保存
-			etDAO.save(entry);
+				// 既にデータベースに存在している確認
+				if (etdao.isData(user_id, group_id)) {
+
+					// 存在していれば、
+					etdao.re_entry(user_id, group_id);
+				} else {
+
+					// 情報のセット
+					entry.setGroup_id(group_id);
+					entry.setUser_id(user_id);
+					// データベースに保存
+					etdao.save(entry);
+				}
+			}
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 			dispatcher.forward(request, response);
-		} else { // グループにアクセスする権限がない
+			
+		} else { // グループがない
 			// 表示データを用意する
-			ErrorViewData errorData = new ErrorViewData("現在参加しようとしているグループは存在しないまたは、既に参加しています。", "トップに戻る", "/ActionLogger/Main");
+			ErrorViewData errorData = new ErrorViewData("現在参加しようとしているグループは存在しません。", "トップに戻る", "/ActionLogger/Main");
 			request.setAttribute("errorData", errorData);
 			// エラー表示にフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");

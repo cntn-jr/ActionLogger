@@ -63,7 +63,7 @@ public class entryDAO {
 	}
 
 	// 参加しようとしているグループに既に参加しているか確認(参加できればtrue)
-	public boolean ableEntry(String user_id, String group_id) {
+	public boolean alreadyEntry(String user_id, String group_id) {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 			String sql = "SELECT * FROM ENTRY WHERE user_id = ? AND group_id = ? AND isentry = true;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -74,8 +74,8 @@ public class entryDAO {
 			while (rs.next()) {
 				id = rs.getString("group_id");
 			}
-			if (id == null) {
-				// 参加していなければ、
+			if (id != null) {
+				// 参加していれば、
 				return true;
 			}
 			return false;
@@ -124,7 +124,7 @@ public class entryDAO {
 	// データが既に登録してあるかどうか
 	public boolean isData(String user_id, String group_id) {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			String sql = "SELECT * FROM ENTRY WHERE user_id = ? AND group_id = ?;";
+			String sql = "SELECT * FROM ENTRY WHERE user_id = ? AND group_id = ? AND isentry = false;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, user_id);
 			pStmt.setString(2, group_id);
