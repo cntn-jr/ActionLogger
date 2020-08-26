@@ -67,6 +67,7 @@
 						type="password" class="form-control" name="password"
 						placeholder="パスワード" required style="margin-bottom: 2em;">
 				</div>
+				<input type="hidden" value="${alter}">
 				<input type="submit" class="btn btn-secondary btn-block btn-lg" id="login" value="確認"></input>
 			</form>
 			

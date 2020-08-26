@@ -2,6 +2,15 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<style>
+	.headline{
+		width: 500px;
+		height: 2em;
+		padding: 0.4em;
+		font-weight: bold;
+	}
+</style>
+
 <div class="sidebar-sticky pt-3">
 
 	<ul class="nav flex-column">
@@ -12,7 +21,7 @@
 
 	<h6
 		class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-		<span>== 活動記録 ==</span> <a
+		<div class="headline">活動記録 </div> <a
 			class="d-flex align-items-center text-muted" href="#"
 			aria-label="Add a new report"> <span data-feather="plus-circle"></span>
 		</a>
@@ -30,7 +39,7 @@
 
 	<h6
 		class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-		<span>== 管理グループ ==</span> <a
+		<div class="headline">グループ</div> <a
 			class="d-flex align-items-center text-muted" href="#"
 			aria-label="Add a new report"> <span data-feather="plus-circle"></span>
 		</a>
@@ -41,12 +50,12 @@
 				新規グループ </a></li>
 		<li class="nav-item"><a class="nav-link"
 			href="/ActionLogger/?view=entryGroup" style="color: #444;">
-				グループに参加 </a></li>
+				参加 </a></li>
 	</ul>
 
 	<h6
 		class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-		<span>== 管理中のグループ ==</span> <a
+		<div class="headline">管理グループ</div> <a
 			class="d-flex align-items-center text-muted" href="#"
 			aria-label="Add a new report"> <span data-feather="plus-circle"></span>
 		</a>
@@ -62,7 +71,7 @@
 	
 	<h6
 		class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-		<span>== 参加中のグループ ==</span> <a
+		<div class="headline">参加グループ</div> <a
 			class="d-flex align-items-center text-muted" href="#"
 			aria-label="Add a new report"> <span data-feather="plus-circle"></span>
 		</a>
@@ -78,7 +87,7 @@
 
 	<h6
 		class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-		<span>== プロフィール ==</span> <a
+		<div class="headline">プロフィール</div> <a
 			class="d-flex align-items-center text-muted" href="#"
 			aria-label="Add a new report"> <span data-feather="plus-circle"></span>
 		</a>

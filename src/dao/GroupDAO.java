@@ -133,17 +133,17 @@ public class GroupDAO {
 	}
 
 	// ‚P‚Â‚ÌƒOƒ‹[ƒv‚Ìî•ñ‚ğæ“¾
-	public GroupMgt getGroup(String group_id) {
-		GroupMgt group = new GroupMgt();
+	public List<String> getGroup(String group_id) {
+		List<String> group = new ArrayList<>();
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			String sql = "SELECT * FROM mgt_group WHERE group_id = ?;";
+			String sql = "SELECT * FROM mgt_group AS g , user AS u WHERE g.group_id = ? AND g.admin_id = u.userid;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, group_id);
 			ResultSet rs = pStmt.executeQuery();
-			while(rs.next()) {
-				group.setGroup_id(rs.getString("group_id"));
-				group.setGroup_name(rs.getString("group_name"));
-				group.setAdmin_id(rs.getString("admin_id"));
+			while (rs.next()) {
+				group.add(rs.getString("group_id"));
+				group.add(rs.getString("group_name"));
+				group.add(rs.getString("name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -151,4 +151,5 @@ public class GroupDAO {
 		}
 		return group;
 	}
+
 }

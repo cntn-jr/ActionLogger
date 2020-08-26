@@ -57,7 +57,7 @@ public class AlterUserInfo extends HttpServlet {
 			String mail = checkMailAddress(request.getParameter("mail"));
 			UserDAO userdao = new UserDAO();
 			userdao.updateInfo(user_id, name, address, tel, mail);
-			//セッションにユーザ情報をセットしなおす
+			// セッションにユーザ情報をセットしなおす
 			User user = userdao.getInfo(user_id);
 			session.setAttribute("user", user);
 			// mainにフォワード
@@ -66,11 +66,20 @@ public class AlterUserInfo extends HttpServlet {
 
 		} catch (InputCheckException e) {
 			// 表示データを用意する
-			ErrorViewData errorData = new ErrorViewData("フォームに入力された内容に問題がありました。", "入力画面に戻る", "/ActionLogger/AlterUserInfo");
+			ErrorViewData errorData = new ErrorViewData("フォームに入力された内容に問題がありました。", "入力画面に戻る",
+					"/ActionLogger/AlterUserInfo");
 			request.setAttribute("errorData", errorData);
 			// エラー表示にフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
 			dispatcher.forward(request, response);
+		} catch (NullPointerException e) {
+			// 表示データを用意する
+			ErrorViewData errorData = new ErrorViewData("問題が発生しました。", "トップに戻る", "/ActionLogger/");
+			request.setAttribute("errorData", errorData);
+			// エラー表示にフォワード
+			RequestDispatcher dispatcher3 = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+			dispatcher3.forward(request, response);
+			return;
 		}
 
 	}

@@ -23,6 +23,8 @@ table {
 
 td {
 	text-align: center;
+	font-size: 1.1em;
+	letter-spacing: 5px;
 }
 
 th {
@@ -31,6 +33,7 @@ th {
 
 td, th {
 	padding: 1em;
+	font-weight: bold;
 }
 
 .btn {
@@ -45,7 +48,7 @@ td, th {
 	font-size: 0.8em;
 }
 
-.btn:hover{
+.btn:hover {
 	color: #fff;
 	background-color: #778beb;
 	border-color: #546de5;
@@ -60,28 +63,28 @@ td, th {
 <div id="container">
 	<table>
 		<tr>
-			<th>グループ名</th>
-			<td><c:out value="${selectGroup.group_name}" /></td>
-		</tr>
-		<tr>
 			<th>グループID</th>
-			<td><c:out value="${selectGroup.group_id}" /></td>
+			<td><c:out value="${selectGroup[0]}" /></td>
 		</tr>
 		<tr>
-			<th>管理者ユーザID</th>
-			<td><c:out value="${selectGroup.admin_id}" /></td>
+			<th>グループ名</th>
+			<td><c:out value="${selectGroup[1]}" /></td>
+		</tr>
+		<tr>
+			<th>管理者ユーザ名</th>
+			<td><c:out value="${selectGroup[2]}" /></td>
 		</tr>
 	</table>
-	
-	<form action="/ActionLogger/EntryGroup?group_id=${selectGroup.group_id}"
-	method="post">
-	<c:choose>
-		<c:when test="${alreadyEntry}">
-			<input type="submit" value="退会" class="btn">
-		</c:when>
-		<c:otherwise>
-			<input type="submit" value="参加" class="" btn>
-		</c:otherwise>
-	</c:choose>
-</form>
+
+	<form action="/ActionLogger/EntryGroup?group_id=${selectGroup[0]}"
+		method="post">
+		<c:choose>
+			<c:when test="${alreadyEntry}">
+				<input type="submit" value="退会" class="btn">
+			</c:when>
+			<c:otherwise>
+				<input type="submit" value="参加" class="" btn>
+			</c:otherwise>
+		</c:choose>
+	</form>
 </div>

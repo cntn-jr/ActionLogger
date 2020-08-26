@@ -24,8 +24,8 @@
 
 <div class="row">
 	<div class="col-14"></div>
-	<div class="col-2"></div>
-	<div class="col-8">
+	<div class="col-4"></div>
+	<div class="col-4">
 		<form class="form-addgroup" action="/ActionLogger/EntryGroup"
 			method="post">
 			<div class="mb-3">
@@ -41,6 +41,6 @@
 			<input type="hidden" name="vKey" value="${validationKey.value}">
 			<input type="submit" class="btn btn-secondary btn-block btn-lg"
 				id="enterRoom" value="参加"></input>
+		</form>
 	</div>
-	</form>
 </div>

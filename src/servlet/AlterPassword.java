@@ -29,7 +29,6 @@ public class AlterPassword extends HttpServlet {
 		HttpSession session = request.getSession();
 		boolean checked = (boolean) session.getAttribute("checked");
 		if (checked) {
-			session.setAttribute("checked",false);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/alterPassword.jsp");
 			dispatcher.forward(request, response);
 		} else {
@@ -63,10 +62,19 @@ public class AlterPassword extends HttpServlet {
 				String pwdhash = String.format("%064x", new BigInteger(1, digest.digest()));
 
 				udao.updatePass(user_id, pwdhash);
+				session.setAttribute("checked", false);
 				response.sendRedirect("/ActionLogger");
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			// 表示データを用意する
+			ErrorViewData errorData = new ErrorViewData("問題が発生しました。", "トップに戻る", "/ActionLogger/");
+			request.setAttribute("errorData", errorData);
+			// エラー表示にフォワード
+			RequestDispatcher dispatcher3 = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+			dispatcher3.forward(request, response);
+			return;
 		}
 	}
 

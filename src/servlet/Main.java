@@ -95,7 +95,7 @@ public class Main extends HttpServlet {
 
 		// グループの情報を取得
 		if (view != null && view.equals("groupInfo")) {
-			GroupMgt selectGroup = new GroupMgt();
+			List<String> selectGroup = new ArrayList<>();
 			String select_id = request.getParameter("selectGroup");
 			selectGroup = gdao.getGroup(select_id);
 			session.setAttribute("selectGroup", selectGroup);
@@ -103,7 +103,7 @@ public class Main extends HttpServlet {
 			boolean alreadyEntry = etdao.alreadyEntry(user_id, select_id);
 			session.setAttribute("alreadyEntry", alreadyEntry);
 		}
-
+		
 		if (user_id == null) {
 			// ログインさせる
 			response.sendRedirect("/ActionLogger/Login");
