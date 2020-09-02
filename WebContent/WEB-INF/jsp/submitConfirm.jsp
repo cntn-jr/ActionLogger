@@ -29,26 +29,27 @@
 }
 
 #container {
-	width: 520px;
-	margin: 50px auto 0;
+	width: 500px;
+	margin: 50px auto;
+	padding: 20px;
+	border-radius: 10px;
+	background: #dcdde1;
+	color: #353b48;
 }
 
-table {
-	margin: 0 auto;
+.box {
 	width: 500px;
 	font-size: 1.2em;
+	margin: 0 auto;
 }
 
-th {
-	width: 150px;
-	text-align: center;
-	height: 40px;
+.key {
+	text-align: left;
+	font-weight: bold;
 }
 
-td {
-	width: 350px;
+.values {
 	text-align: center;
-	height: 40px;
 }
 
 #btnCnt {
@@ -63,11 +64,10 @@ input[type="submit"] {
 	height: 40px;
 	width: 100px;
 	font-weight: bold;
-	margin: 10px 0;
 	font-size: 0.8em;
 }
 
-input[type="submit"]:hover{
+input[type="submit"]:hover {
 	color: #fff;
 	background-color: #778beb;
 	border-color: #546de5;
@@ -85,45 +85,38 @@ input[type="submit"]:hover{
 		<h1 class="h2">Submit Action Log Confirm</h1>
 	</div>
 
-	<div id="container">
-		<form class="form-adduser" action="/ActionLogger/SubmitActionConfirm"
-			method="post">
-			<table>
-				<tr>
-					<th>外出時刻</th>
-					<td><c:out value="${logAct.out_datetime}" /></td>
-				</tr>
-				<tr>
-					<th>帰宅時刻</th>
-					<td><c:out value="${logAct.in_datetime}" /></td>
-				</tr>
-				<tr>
-					<th>場所</th>
-					<td><c:out value="${logAct.place}" /></td>
-				</tr>
-				<tr>
-					<th>理由</th>
-					<td><c:out value="${logAct.reason}" /></td>
-				</tr>
-				<tr>
-					<th>備考</th>
-					<td><c:out value="${logAct.remarks}" /></td>
-				</tr>
-				<tr>
-					<th></th>
-					<td></td>
-				</tr>
-				<tr>
-					<th><input type="submit" id="btn" value="登録"></input></th>
-					<td></td>
-				</tr>
+	<form class="form-adduser" action="/ActionLogger/SubmitActionConfirm"
+		method="post">
+		<div id="container">
+			<div class="key box">外出時刻</div>
+			<div class="values box">
+				<c:out value="${logAct.out_datetime}" />
+			</div>
+			<div class="key box">帰宅時刻</div>
+			<div class="values box">
+				<c:out value="${logAct.in_datetime}" />
+			</div>
+			<div class="key box">場所</div>
+			<div class="values box">
+				<c:out value="${logAct.place}" />
+			</div>
+			<div class="key box">理由</div>
+			<div class="values box">
+				<c:out value="${logAct.reason}" />
+			</div>
+			<div class="key box">備考</div>
+			<div class="values box">
+				<c:out value="${logAct.remarks}" />
+			</div>
 
-			</table>
 			<%-- フォームの正当性確認データ --%>
 			<input type="hidden" name="vKey" value="${validationKey.value}">
 			<input type="hidden" name="status" value="confirmed"></input>
-		</form>
+		</div>
+		<div class="box">
+			<input type="submit" id="btn" value="登録"></input>
+		</div>
+	</form>
 
-	</div>
 </body>
 </html>

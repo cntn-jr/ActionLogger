@@ -18,7 +18,7 @@
 	width: 7em;
 }
 
-#table table td{
+#table table td {
 	width: 10em;
 }
 
@@ -26,12 +26,22 @@
 	padding: 0.5em;
 }
 
-#linkBox{
+#linkBox {
 	text-align: center;
+	width: 8em;
+	margin: 20px auto;
+	height: 2em;
+	line-height: 2em;
+	background: #78e08f;
+	border-radius: 4px;
 }
 
-#linkAll{
-	text-decoration: none; color: #66CCFF;
+#linkAll {
+	text-decoration: none;
+	color: #f5f6fa;
+	height: 2em;
+	line-height: 2em;
+	font-weight: bold;
 }
 
 #notAction {
