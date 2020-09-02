@@ -19,18 +19,26 @@ import model.ValidationKey;
 public class SignupConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public SignupConfirm() {
-        super();
-    }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	public SignupConfirm() {
+		super();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// 表示データを用意する
+		ErrorViewData errorData = new ErrorViewData("アクセス出来ませんでした。", "トップに戻る", "/ActionLogger/Main");
+		request.setAttribute("errorData", errorData);
+		// エラー表示にフォワード
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+		dispatcher.forward(request, response);
+		return;
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		
+
 //		// フォームから送られた確認キーが保存したものと一致するか確認
 //		ValidationKey validationKey = (ValidationKey) session.getAttribute("validationKey");
 //		if (!request.getParameter("vKey").equals(validationKey.getValue())) {
@@ -44,14 +52,13 @@ public class SignupConfirm extends HttpServlet {
 //			 dispatcher.forward(request, response);
 //			 return;
 //		}
-		
-		
-		//新規ユーザをデータベースに登録
-		User newUser = (User)session.getAttribute("newUser");
+
+		// 新規ユーザをデータベースに登録
+		User newUser = (User) session.getAttribute("newUser");
 		UserDAO userDAO = new UserDAO();
 		userDAO.save(newUser);
 		session.setAttribute("loginUser_id", newUser.getUser_id());
-		//ユーザIDから新規ユーザの情報を取得
+		// ユーザIDから新規ユーザの情報を取得
 		User user = userDAO.getInfo(newUser.getUser_id());
 		session.setAttribute("user", user);
 		response.sendRedirect("/ActionLogger");

@@ -24,7 +24,7 @@
 </head>
 
 <style>
-.h2{
+.h2 {
 	margin-left: 3em;
 }
 
@@ -51,20 +51,26 @@ td {
 	height: 40px;
 }
 
-#btnCnt{
+#btnCnt {
 	text-align: right;
 }
 
-#btn {
+input[type="submit"] {
 	color: #fff;
-	background-color: #545b62;
-	border-color: #4e555b;
+	background-color: #778beb;
+	border-color: #546de5;
 	border-radius: 10px;
 	height: 40px;
 	width: 100px;
 	font-weight: bold;
 	margin: 10px 0;
 	font-size: 0.8em;
+}
+
+input[type="submit"]:hover{
+	color: #fff;
+	background-color: #778beb;
+	border-color: #546de5;
 }
 </style>
 
@@ -103,10 +109,13 @@ td {
 					<th>備考</th>
 					<td><c:out value="${logAct.remarks}" /></td>
 				</tr>
-				<!-- <tr><th></th><td></td></tr> -->
 				<tr>
 					<th></th>
-					<td id="btnCnt"><input type="submit" id="btn" value="登録"></input></td>
+					<td></td>
+				</tr>
+				<tr>
+					<th><input type="submit" id="btn" value="登録"></input></th>
+					<td></td>
 				</tr>
 
 			</table>

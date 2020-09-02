@@ -25,7 +25,7 @@ public class EntryGroup extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect("/ActionLooger");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -66,7 +66,7 @@ public class EntryGroup extends HttpServlet {
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 			dispatcher.forward(request, response);
-			
+
 		} else { // グループがない
 			// 表示データを用意する
 			ErrorViewData errorData = new ErrorViewData("現在参加しようとしているグループは存在しません。", "トップに戻る", "/ActionLogger/Main");

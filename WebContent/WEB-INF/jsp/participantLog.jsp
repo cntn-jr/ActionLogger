@@ -66,7 +66,7 @@
 				<tbody>
 					<c:forEach var="log" items="${participantLogList}">
 						<tr style="font-weight:500;">
-							<td><c:out value="${log.user_id}" /></td>
+							<td><c:out value="${log.userName}" /></td>
 							<td><c:out value="${log.out_datetime}" /></td>
 							<td><c:out value="${log.in_datetime}" /></td>
 							<td><c:out value="${log.place}" /></td>

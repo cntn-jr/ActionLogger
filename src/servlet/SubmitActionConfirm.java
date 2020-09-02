@@ -28,7 +28,13 @@ public class SubmitActionConfirm extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// 表示データを用意する
+		ErrorViewData errorData = new ErrorViewData("アクセス出来ませんでした。", "トップに戻る", "/ActionLogger/Main");
+		request.setAttribute("errorData", errorData);
+		// エラー表示にフォワード
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+		dispatcher.forward(request, response);
+		return;
 	}
 
 

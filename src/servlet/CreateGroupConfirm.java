@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.GroupDAO;
 import dao.Info_actDAO;
+import model.ErrorViewData;
 import model.GroupMgt;
 import model.InformationAction;
 
@@ -21,30 +22,39 @@ import model.InformationAction;
 @WebServlet("/CreateGroupConfirm")
 public class CreateGroupConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CreateGroupConfirm() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	public CreateGroupConfirm() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// 表示データを用意する
+		ErrorViewData errorData = new ErrorViewData("アクセス出来ませんでした。", "トップに戻る", "/ActionLogger/Main");
+		request.setAttribute("errorData", errorData);
+		// エラー表示にフォワード
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+		dispatcher.forward(request, response);
+		return;
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		
+
 //		// フォームから送られた確認キーが保存したものと一致するか確認
 //		ValidationKey validationKey = (ValidationKey) session.getAttribute("validationKey");
 //		if (!request.getParameter("vKey").equals(validationKey.getValue())) {
@@ -58,12 +68,11 @@ public class CreateGroupConfirm extends HttpServlet {
 //			 dispatcher.forward(request, response);
 //			 return;
 //		}
-		
-		
-		GroupMgt group = (GroupMgt)session.getAttribute("group");
-		GroupDAO gdao =  new GroupDAO();
+
+		GroupMgt group = (GroupMgt) session.getAttribute("group");
+		GroupDAO gdao = new GroupDAO();
 		gdao.save(group);
-		session.removeAttribute("group");//セッションスコープの除去
+		session.removeAttribute("group");// セッションスコープの除去
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 		dispatcher.forward(request, response);
 	}

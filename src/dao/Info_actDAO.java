@@ -175,7 +175,10 @@ public class Info_actDAO {
 		InformationAction log = null;
 		List<InformationAction> logList = new ArrayList<InformationAction>();
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			String sql = "SELECT * FROM info_act, entry WHERE info_act.user_id = entry.user_id AND entry.group_id = ? AND entry.isentry = true";
+			String sql = "SELECT * FROM info_act, entry , user "
+					+ "WHERE info_act.user_id = entry.user_id "
+					+ "AND user.userid = info_act.user_id "
+					+ "AND entry.group_id = ? AND entry.isentry = true";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, group_id);
 			ResultSet rs = pStmt.executeQuery();
@@ -183,7 +186,7 @@ public class Info_actDAO {
 			while (rs.next()) {
 				log = new InformationAction();
 				log.setLog_id(rs.getString("log_id"));
-				log.setUser_id(rs.getString("user_id"));
+				log.setUserName(rs.getString("name"));
 				log.setDateSbm(rs.getString("date_submit"));
 				log.setOut_datetime(rs.getString("goout_start").substring(0, 16));
 				log.setIn_datetime(rs.getString("goout_end").substring(0, 16));
@@ -206,8 +209,9 @@ public class Info_actDAO {
 		InformationAction log = null;
 		List<InformationAction> logList = new ArrayList<InformationAction>();
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			String sql = "SELECT * FROM info_act, entry "
+			String sql = "SELECT * FROM info_act, entry,  user "
 					+ "WHERE info_act.user_id = entry.user_id AND entry.group_id = ? "
+					+ "AND user.userid = info_act.user_id "
 					+ "AND (info_act.goout_start LIKE ? OR info_act.goout_end LIKE ?) "
 					+ "AND info_act.place LIKE ? AND entry.isentry = true";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -220,7 +224,7 @@ public class Info_actDAO {
 			while (rs.next()) {
 				log = new InformationAction();
 				log.setLog_id(rs.getString("log_id"));
-				log.setUser_id(rs.getString("user_id"));
+				log.setUserName(rs.getString("name"));
 				log.setDateSbm(rs.getString("date_submit"));
 				log.setOut_datetime(rs.getString("goout_start").substring(0, 16));
 				log.setIn_datetime(rs.getString("goout_end").substring(0, 16));

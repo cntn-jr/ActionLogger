@@ -38,14 +38,20 @@ textarea {
 
 .btn {
 	color: #fff;
-	background-color: #545b62;
-	border-color: #4e555b;
+	background-color: #778beb;
+	border-color: #546de5;
 	border-radius: 10px;
 	height: 40px;
 	width: 100px;
 	font-weight: bold;
 	margin: 10px 0;
 	font-size: 0.8em;
+}
+
+.btn:hover {
+	color: #fff;
+	background-color: #778beb;
+	border-color: #546de5;
 }
 </style>
 

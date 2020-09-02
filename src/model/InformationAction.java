@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class InformationAction implements Serializable{
 	
-	private String log_id,dateSbm,out_datetime,in_datetime,place,reason,remarks,user_id;
+	private String log_id,dateSbm,out_datetime,in_datetime,place,reason,remarks,user_id,userName;
 	
 	public InformationAction() {}
 	public InformationAction(String log_id,String dateSbm,String out_datetime,String in_datetime,String place,String reason,String remarks,String user_id) {
@@ -16,6 +16,12 @@ public class InformationAction implements Serializable{
 		this.reason=reason;
 		this.remarks=remarks;
 		this.user_id=user_id;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getLog_id() {
 		return log_id;
