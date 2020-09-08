@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>ActionLogger ユーザー登録確認</title>
+<title>ActionLogger 活動記録登録確認</title>
 
 <!-- Bootstrap core CSS -->
 <link
@@ -33,8 +33,9 @@
 	margin: 50px auto;
 	padding: 20px;
 	border-radius: 10px;
-	background: #dcdde1;
-	color: #353b48;
+	background: #f8f9fa;
+	border: #dfe6e9 solid 1px;
+	color: #4b4b4b;
 }
 
 .box {
@@ -50,6 +51,8 @@
 
 .values {
 	text-align: center;
+	font-weight: 500;
+	letter-spacing: 5px;
 }
 
 #btnCnt {
@@ -64,12 +67,11 @@ input[type="submit"] {
 	height: 40px;
 	width: 100px;
 	font-weight: bold;
-	font-size: 0.8em;
 }
 
 input[type="submit"]:hover {
 	color: #fff;
-	background-color: #778beb;
+	background-color: #546de5;
 	border-color: #546de5;
 }
 </style>
@@ -82,7 +84,7 @@ input[type="submit"]:hover {
 	</nav>
 	<div
 		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h1 class="h2">Submit Action Log Confirm</h1>
+		<h1 class="h2">活動記録登録確認</h1>
 	</div>
 
 	<form class="form-adduser" action="/ActionLogger/SubmitActionConfirm"

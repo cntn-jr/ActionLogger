@@ -18,8 +18,10 @@
 	width: 7em;
 }
 
-#table table td {
-	width: 10em;
+#tables table td {
+	width: 12em;
+	line-height: 1.4em;
+	font-weight: 500;
 }
 
 #tables table td, #tables table th {
@@ -33,7 +35,13 @@
 	height: 2em;
 	line-height: 2em;
 	background: #78e08f;
+	border: solid 1px #1dd1a1;
 	border-radius: 4px;
+	user-select: none;
+}
+
+#linkBox:hover {
+	background: #1dd1a1;
 }
 
 #linkAll {
@@ -126,9 +134,9 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="linkBox">
-			<a id="linkAll" href="/ActionLogger/?view=activities">全て表示</a>
-		</div>
+		<a id="linkAll" href="/ActionLogger/?view=activities">
+			<div id="linkBox">全て表示</div>
+		</a>
 		<br>
 	</c:when>
 	<c:otherwise>

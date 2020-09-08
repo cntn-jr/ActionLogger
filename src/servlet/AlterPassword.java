@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static model.InputChecker.*;
 import dao.UserDAO;
 import model.ErrorViewData;
+import model.InputCheckException;
 
 @WebServlet("/AlterPassword")
 public class AlterPassword extends HttpServlet {
@@ -48,10 +50,14 @@ public class AlterPassword extends HttpServlet {
 			String user_id = (String) session.getAttribute("loginUser_id");
 			String pass = request.getParameter("password");
 			String rePass = request.getParameter("re_password");
-			if (!pass.equals(rePass)) {
-				// パスと確認パスが間違っていたら、入力させなおす
+			if(!checkPassword(pass) || !checkPassword(rePass)) {
+				session.setAttribute("rewright", "パスワードは、3～30文字で入力して下さい");
 				response.sendRedirect("/ActionLogger/AlterPassword");
-
+			}
+			else if (!pass.equals(rePass)) {
+				// パスと確認パスが間違っていたら、入力させなおす
+				session.setAttribute("rewright", "確認用パスワードが違います");
+				response.sendRedirect("/ActionLogger/AlterPassword");
 			} else {
 				UserDAO udao = new UserDAO();
 
@@ -60,7 +66,7 @@ public class AlterPassword extends HttpServlet {
 				digest.reset();
 				digest.update(pass.getBytes("utf8"));
 				String pwdhash = String.format("%064x", new BigInteger(1, digest.digest()));
-
+				session.removeAttribute("rewright");
 				udao.updatePass(user_id, pwdhash);
 				session.setAttribute("checked", false);
 				response.sendRedirect("/ActionLogger");

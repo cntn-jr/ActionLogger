@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>ActionLogger ユーザー登録確認</title>
+<title>ActionLogger グループ作成確認</title>
 
 <!-- Bootstrap core CSS -->
 <link
@@ -24,15 +24,58 @@
 </head>
 
 <style>
-.btn {
+.h2 {
+	margin-left: 3em;
+}
+
+#container {
+	width: 500px;
+	margin: auto;
+}
+
+#subContainer {
+	border-radius: 10px;
+	background: #f8f9fa;
+	border: #dfe6e9 solid 1px;
+	color: #4b4b4b;
+	margin: 50px auto;
+	padding: 20px;
+}
+
+.box {
+	width: 500px;
+	font-size: 1.2em;
+	margin: 0 auto;
+}
+
+.key {
+	text-align: left;
+	font-weight: bold;
+}
+
+.values {
+	text-align: center;
+	font-weight: 500;
+	letter-spacing: 5px;
+}
+
+#btnCnt {
+	text-align: right;
+}
+
+#btn {
 	color: #fff;
 	background-color: #778beb;
 	border-color: #546de5;
+	border-radius: 10px;
+	height: 40px;
+	width: 100px;
+	font-weight: bold;
 }
 
-.btn:hover {
+#btn:hover {
 	color: #fff;
-	background-color: #778beb;
+	background-color: #546de5;
 	border-color: #546de5;
 }
 </style>
@@ -46,33 +89,32 @@
 
 	<div
 		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h1 class="h2">Create Group Confirm</h1>
+		<h1 class="h2">グループ作成確認</h1>
 	</div>
 
-	<div class="row">
-		<div class="col"></div>
-		<div class="col-8">
-			<form class="form-adduser" action="/ActionLogger/CreateGroupConfirm"
-				method="post">
+	<form class="form-adduser" action="/ActionLogger/CreateGroupConfirm"
+		method="post">
 
-				<div class="mb-3">
-					グループID :
+		<div id="container">
+			<div id="subContainer">
+				<div class="key box">グループID</div>
+				<div class="values box">
 					<c:out value="${group.group_id}" />
 				</div>
-				<div class="mb-3">
-					グループ名:
+				<div class="key box">グループ名</div>
+				<div class="values box">
 					<c:out value="${group.group_name}" />
 				</div>
-
-				<%-- フォームの正当性確認データ --%>
-				<input type="hidden" name="vKey" value="${validationKey.value}">
-				<input type="hidden" name="status" value="confirmed"></input> <input
-					type="submit" class="btn btn-secondary btn-block btn-lg"
-					id="enterRoom" value="OK"></input>
-			</form>
+			</div>
+			<div>
+				<input type="submit" id="btn" value="登録"></input>
+			</div>
 		</div>
-		<div class="col"></div>
 
-	</div>
+		<%-- フォームの正当性確認データ --%>
+		<input type="hidden" name="vKey" value="${validationKey.value}">
+		<input type="hidden" name="status" value="confirmed"></input>
+	</form>
+
 </body>
 </html>

@@ -11,8 +11,9 @@
 	padding-top: 1em;
 	padding-bottom: 1em;
 	border-radius: 10px;
-	background: #303952;
-	color: #ddd;
+	background: #f8f9fa;
+	border: #dfe6e9 solid 1px;
+	color: #4b4b4b;
 }
 
 table {
@@ -25,6 +26,7 @@ td {
 	text-align: center;
 	font-size: 1.1em;
 	letter-spacing: 5px;
+	font-weight: 500;
 }
 
 th {
@@ -33,31 +35,30 @@ th {
 
 td, th {
 	padding: 1em;
-	font-weight: bold;
 }
 
 .btn {
 	color: #fff;
-	background-color: #778beb;
-	border-color: #546de5;
+	background-color: #e17055;
+	border-color: #d63031;
 	border-radius: 10px;
 	height: 40px;
 	width: 400px;
 	font-weight: bold;
-	margin: 20px auto;
+	margin: 50px auto;
 	font-size: 0.8em;
 }
 
 .btn:hover {
 	color: #fff;
-	background-color: #778beb;
-	border-color: #546de5;
+	background-color: #d63031;
+	border-color: #d63031;
 }
 </style>
 
 <div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">Group Information</h1>
+	<h1 class="h2">グループ情報</h1>
 </div>
 
 <div id="container">
@@ -83,7 +84,7 @@ td, th {
 				<input type="submit" value="退会" class="btn">
 			</c:when>
 			<c:otherwise>
-				<input type="submit" value="参加" class="" btn>
+				<input type="submit" value="参加" class="btn">
 			</c:otherwise>
 		</c:choose>
 	</form>

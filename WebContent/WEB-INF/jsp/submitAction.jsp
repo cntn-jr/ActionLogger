@@ -9,6 +9,14 @@
 	font-weight: 600;
 }
 
+#container {
+	background: #f8f9fa;
+	border: #dfe6e9 solid 1px;
+	color: #4b4b4b;
+	padding: 20px;
+	border-radius: 10px;
+}
+
 .timeBox {
 	display: flex;
 }
@@ -45,51 +53,52 @@ textarea {
 	width: 100px;
 	font-weight: bold;
 	margin: 10px 0;
-	font-size: 0.8em;
 }
 
 .btn:hover {
 	color: #fff;
-	background-color: #778beb;
+	background-color: #546de5;
 	border-color: #546de5;
 }
 </style>
 
 <div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">Submit Action</h1>
+	<h1 class="h2">活動記録登録</h1>
 </div>
 <div id="submitContainer">
 	<form action="/ActionLogger/Submit" method="post">
-		<label>外出日時</label>
-		<div class="timeBox">
-			<div class="timeArea">
-				<input type="date" class="" name="out_date" value="" required />
+		<div id="container">
+			<label>外出日時</label>
+			<div class="timeBox">
+				<div class="timeArea">
+					<input type="date" class="" name="out_date" value="" required />
+				</div>
+				<div class="timeArea">
+					<input type="time" class="" name="out_time" value="" required />
+				</div>
 			</div>
-			<div class="timeArea">
-				<input type="time" class="" name="out_time" value="" required />
+			<label>帰宅日時</label>
+			<div class="timeBox">
+				<div class="timeArea">
+					<input type="date" class="" name="in_date" value="" required />
+				</div>
+				<div class="timeArea">
+					<input type="time" class="" name="in_time" value="" required />
+				</div>
 			</div>
-		</div>
-		<label>帰宅日時</label>
-		<div class="timeBox">
-			<div class="timeArea">
-				<input type="date" class="" name="in_date" value="" required />
+			<label>場所</label>
+			<div class="textBox">
+				<input type="text" class="" name="place" value="" required />
 			</div>
-			<div class="timeArea">
-				<input type="time" class="" name="in_time" value="" required />
+			<label for="">理由</label>
+			<div class="textBox">
+				<textarea required name="reason" value=""></textarea>
 			</div>
-		</div>
-		<label>場所</label>
-		<div class="textBox">
-			<input type="text" class="" name="place" value="" required />
-		</div>
-		<label for="">理由</label>
-		<div class="textBox">
-			<textarea required name="reason" value=""></textarea>
-		</div>
-		<label for="">備考</label>
-		<div class="textBox">
-			<textarea class="" name="remarks" value=""></textarea>
+			<label for="">備考</label>
+			<div class="textBox">
+				<textarea class="" name="remarks" value=""></textarea>
+			</div>
 		</div>
 		<button type="submit" class="btn">確認</button>
 	</form>

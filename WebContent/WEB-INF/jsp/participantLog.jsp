@@ -5,7 +5,7 @@
 
 <div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">Participant Action Log</h1>
+	<h1 class="h2">管理グループ　行動履歴</h1>
 	<!-- モーダルを表示させるボタン -->
 	<p class="btn btn-primary" data-toggle="modal"
 		data-target="#exampleModal"

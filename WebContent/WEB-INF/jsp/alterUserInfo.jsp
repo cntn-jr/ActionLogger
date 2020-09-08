@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ page import="model.User" %>
+<%@ page import="model.User"%>
 <!doctype html>
 <html lang="ja">
 <head>
@@ -18,30 +18,74 @@
 
 <meta name="theme-color" content="#563d7c">
 <style>
-.bd-placeholder-img {
-	font-size: 1.125rem;
-	text-anchor: middle;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+.headline {
+	margin-left: 3em;
 }
 
-@media ( min-width : 768px) {
-	.bd-placeholder-img-lg {
-		font-size: 3.5rem;
-	}
+.container {
+	width: 600px;
+	margin-top: 80px;
 }
 
-.btn{
+.subContainer {
+	background: #f8f9fa;
+	border: #dfe6e9 solid 1px;
+	color: #4b4b4b;
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 30px;
+	padding: 50px;
+	font-weight: bold;
+}
+
+.form-control, label {
+	margin: 8px;
+}
+
+.btnBox {
+	display: flex;
+	margin: 10px 0;
+}
+
+.btn {
 	color: #fff;
 	background-color: #778beb;
 	border-color: #546de5;
+	border-radius: 10px;
+	height: 40px;
+	width: 100px;
+	font-weight: bold;
+	margin-right: 10px;
+	marign: 10px 0;
 }
-.btn:hover{
+
+.btn:hover {
 	color: #fff;
-	background-color: #778beb;
+	background-color: #546de5;
 	border-color: #546de5;
+}
+
+#linkBox {
+	text-align: center;
+	height: 40px;
+	width: 100px;
+	line-height: 40px;
+	background-color: #f8f9fa;
+	border: solid 1px #c8d6e5;
+	border-radius: 10px;
+}
+
+#linkBox:hover {
+	background-color: #c8d6e5;
+	border: solid 1px #c8d6e5;
+}
+
+#linkHome {
+	text-decoration: none;
+	color: #576574;
+	height: 2em;
+	line-height: 2em;
+	font-weight: bold;
 }
 </style>
 <!-- Custom styles for this template -->
@@ -53,42 +97,50 @@
 		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Action
 			Logger</a>
 	</nav>
-	
-	<div
-	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2" style="margin-left:5em;">Alter Profile</h1>
-</div>
 
-	<div class="row">
-		<div class="col"></div>
-		<div class="col-8">
-			<form class="form-adduser" action="/ActionLogger/AlterUserInfo"
-				method="post">
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h2 class="headline">プロフィール変更</h2>
+	</div>
+
+	<div class="container">
+		<form action="/ActionLogger/AlterUserInfo" method="post">
+			<div class="subContainer">
 				<div class="mb-3">
 					<label for="name">氏名</label> <input type="text"
-						class="form-control" id="name" name="name" placeholder="氏名" value="${user.name}"
-						　required>
+						class="form-control" id="name" name="name" placeholder="氏名"
+						value="${user.name}" 　required>
 					<div class="invalid-feedback">必須</div>
 				</div>
 				<div class="mb-3">
-					<label for="address">住所</label> <input type="text" value="${user.address}"
-						class="form-control" id="address" name="address" placeholder="住所">
+					<label for="address">住所</label> <input type="text"
+						value="${user.address}" class="form-control" id="address"
+						name="address" placeholder="住所">
 				</div>
 				<div class="mb-3">
-					<label for="tel">電話番号</label> <input type="text" value="${user.tel_number}"
-						class="form-control" id="tel" name="tel_number"
-						placeholder="xxxx-xxxx-xxxx">
+					<label for="tel">電話番号</label> <input type="text"
+						value="${user.tel_number}" class="form-control" id="tel"
+						name="tel_number" placeholder="xxxx-xxxx-xxxx">
 				</div>
 				<div class="mb-3">
-					<label for="email">メールアドレス</label> <input type="text" value="${user.mail}"
-						class="form-control" id="email" name="mail" placeholder="メールアドレス">
+					<label for="email">メールアドレス</label> <input type="text"
+						value="${user.mail}" class="form-control" id="email" name="mail"
+						placeholder="メールアドレス">
 				</div>
-				<input type="submit" class="btn btn-secondary btn-block btn-lg"
-					id="enterRoom" value="変更"></input>
-			</form>
-		</div>
-		<div class="col"></div>
+			</div>
 
+
+			<%-- フォームの正当性確認データ --%>
+			<input type="hidden" name="vKey" value="${validationKey.value}">
+			<div class='btnBox'>
+				<input type="submit" class="btn" value="変更"></input> <a
+					id="linkHome" href="/ActionLogger/">
+					<div id="linkBox">戻る</div>
+				</a>
+			</div>
+		</form>
 	</div>
+
+
 </body>
 </html>

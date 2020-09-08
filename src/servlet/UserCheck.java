@@ -12,6 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import dao.UserDAO;
 import model.ErrorViewData;
+import model.InputCheckException;
+
+import static model.InputChecker.*;
 import model.LoginLogic;
 import model.User;
 
@@ -58,10 +61,10 @@ public class UserCheck extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String password = request.getParameter("password");
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("loginUser_id");
 		try {
+			String password = checkLongInput(request.getParameter("password"));
 			// 何を変更するか識別する
 			String alter = (String) session.getAttribute("alter");
 			LoginLogic lg = new LoginLogic();
@@ -92,6 +95,7 @@ public class UserCheck extends HttpServlet {
 				}
 			} else {
 				// パスワードが間違っていたり、不正にアクセスされたら
+				request.setAttribute("rewright", "パスワードが違います");
 				RequestDispatcher dispatcher4 = request.getRequestDispatcher("/WEB-INF/jsp/userCheck.jsp");
 				dispatcher4.forward(request, response);
 			}
@@ -99,6 +103,15 @@ public class UserCheck extends HttpServlet {
 			session.setAttribute("alter", null);
 			// 表示データを用意する
 			ErrorViewData errorData = new ErrorViewData("問題が発生しました。", "トップに戻る", "/ActionLogger/");
+			request.setAttribute("errorData", errorData);
+			// エラー表示にフォワード
+			RequestDispatcher dispatcher3 = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+			dispatcher3.forward(request, response);
+			return;
+		}catch(InputCheckException e) {
+			session.setAttribute("alter", null);
+			// 表示データを用意する
+			ErrorViewData errorData = new ErrorViewData("入力された値に問題がありました。", "トップに戻る", "/ActionLogger/");
 			request.setAttribute("errorData", errorData);
 			// エラー表示にフォワード
 			RequestDispatcher dispatcher3 = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");

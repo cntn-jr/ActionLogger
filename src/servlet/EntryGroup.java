@@ -14,6 +14,8 @@ import dao.GroupDAO;
 import dao.entryDAO;
 import model.EntryGrp;
 import model.ErrorViewData;
+import model.InputCheckException;
+import static model.InputChecker.*;
 
 @WebServlet("/EntryGroup")
 public class EntryGroup extends HttpServlet {
@@ -33,48 +35,56 @@ public class EntryGroup extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
-		EntryGrp entry = new EntryGrp();
-		entryDAO etdao = new entryDAO();
-		GroupDAO gdao = new GroupDAO();
-		String user_id = (String) session.getAttribute("loginUser_id");
-		String group_id = request.getParameter("group_id");
+		try {
+			EntryGrp entry = new EntryGrp();
+			entryDAO etdao = new entryDAO();
+			GroupDAO gdao = new GroupDAO();
+			String user_id = (String) session.getAttribute("loginUser_id");
+			String group_id = checkLongInput(request.getParameter("group_id"));
 
-		// 参加しようとするグループが存在しているか、確認
-		if (gdao.isGroup(group_id)) {
+			// 参加しようとするグループが存在しているか、確認
+			if (gdao.isGroup(group_id)) {
 
-			// グループに現在、参加しているか確認
-			if (etdao.alreadyEntry(user_id, group_id)) {
+				// グループに現在、参加しているか確認
+				if (etdao.alreadyEntry(user_id, group_id)) {
 
-				// 既に参加しているので、退会させる
-				etdao.leave(user_id, group_id);
-			} else {
-
-				// 既にデータベースに存在している確認
-				if (etdao.isData(user_id, group_id)) {
-
-					// 存在していれば、
-					etdao.re_entry(user_id, group_id);
+					// 既に参加しているので、退会させる
+					etdao.leave(user_id, group_id);
 				} else {
 
-					// 情報のセット
-					entry.setGroup_id(group_id);
-					entry.setUser_id(user_id);
-					// データベースに保存
-					etdao.save(entry);
+					// 既にデータベースに存在している確認
+					if (etdao.isData(user_id, group_id)) {
+
+						// 存在していれば、
+						etdao.re_entry(user_id, group_id);
+					} else {
+
+						// 情報のセット
+						entry.setGroup_id(group_id);
+						entry.setUser_id(user_id);
+						// データベースに保存
+						etdao.save(entry);
+					}
 				}
+
+				response.sendRedirect("/ActionLogger");
+
+			} else { // グループがない
+				// 表示データを用意する
+				ErrorViewData errorData = new ErrorViewData("現在参加しようとしているグループは存在しません。", "トップに戻る", "/ActionLogger/Main");
+				request.setAttribute("errorData", errorData);
+				// エラー表示にフォワード
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+				dispatcher.forward(request, response);
+				return;
 			}
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
-			dispatcher.forward(request, response);
-
-		} else { // グループがない
+		} catch (InputCheckException e) {
 			// 表示データを用意する
-			ErrorViewData errorData = new ErrorViewData("現在参加しようとしているグループは存在しません。", "トップに戻る", "/ActionLogger/Main");
+			ErrorViewData errorData = new ErrorViewData("フォームに入力された内容に問題がありました。", "入力画面に戻る", "/ActionLogger/");
 			request.setAttribute("errorData", errorData);
 			// エラー表示にフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
 			dispatcher.forward(request, response);
-			return;
 		}
 
 	}

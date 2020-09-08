@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-  <!doctype html>
+	pageEncoding="UTF-8"%><%@ taglib prefix="c"
+	uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<!doctype html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -18,30 +20,70 @@
 
 <meta name="theme-color" content="#563d7c">
 <style>
-.bd-placeholder-img {
-	font-size: 1.125rem;
-	text-anchor: middle;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+.headline {
+	margin-left: 3em;
 }
 
-@media ( min-width : 768px) {
-	.bd-placeholder-img-lg {
-		font-size: 3.5rem;
-	}
+.container {
+	width: 500px;
+	margin-top: 80px;
 }
+
+.subContainer {
+	background: #f8f9fa;
+	border: #dfe6e9 solid 1px;
+	color: #4b4b4b;
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 30px;
+	padding: 50px;
+	font-weight: bold;
+}
+
+.btnBox {
+	display: flex;
+	marign: 10px 0;
+}
+
 .btn {
 	color: #fff;
 	background-color: #778beb;
 	border-color: #546de5;
+	border-radius: 10px;
+	height: 40px;
+	width: 100px;
+	font-weight: bold;
+	margin-right: 10px;
 }
 
 .btn:hover {
 	color: #fff;
-	background-color: #778beb;
+	background-color: #546de5;
 	border-color: #546de5;
+}
+
+#linkBox {
+	text-align: center;
+	height: 40px;
+	width: 100px;
+	line-height: 40px;
+	background-color: #f8f9fa;
+	border: solid 1px #c8d6e5;
+	border-radius: 10px;
+}
+
+#linkBox:hover {
+	background-color: #c8d6e5;
+	border: solid 1px #c8d6e5;
+}
+
+#linkHome {
+	text-decoration: none;
+	color: #576574;
+	height: 2em;
+	line-height: 2em;
+	font-weight: bold;
+	height: 2em;
 }
 </style>
 <!-- Custom styles for this template -->
@@ -50,30 +92,37 @@
 <body>
 	<nav
 		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/ActionLogger/">Action
-			Logger</a>
+		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
+			href="/ActionLogger/">Action Logger</a>
 	</nav>
 
-<div class="row" style="margin-top: 4em;">
-		<div class="col"></div>
-		<div class="col-８">
-			<form class="form-signin" action="/ActionLogger/UserCheck" method="post">
-				<h4 h3 mb-3 font-weight-normal style="margin-bottom: 1em;">
-					パスワード確認
-				</h4>
-				<div class="form-group">
-					パスワード<br> 
-					<input
-						type="password" class="form-control" name="password"
-						placeholder="パスワード" required style="margin-bottom: 2em;">
-				</div>
-				<input type="hidden" value="${alter}">
-				<input type="submit" class="btn btn-secondary btn-block btn-lg" id="login" value="確認"></input>
-			</form>
-			
-		</div>
-		<div class="col"></div>
-		
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h2 class="headline">パスワード確認</h2>
 	</div>
-	</body>
-	</html>
+
+	<div class="container">
+		<form action="/ActionLogger/UserCheck" method="post">
+			<div class="subContainer">
+				<label for="name">現在のパスワードを入力</label> <input type="password"
+					class="form-control" name="password" placeholder="パスワード" required>
+				<div class="invalid-feedback">必須</div>
+				<c:if test="${rewright != null}">
+					<p style="color: red; font-size: 0.8em;">&lowast;<c:out value="${rewright}"></c:out></p>
+				</c:if>
+			</div>
+			<input type="hidden" value="${alter}">
+
+
+			<%-- フォームの正当性確認データ --%>
+			<input type="hidden" name="vKey" value="${validationKey.value}">
+			<div class='btnBox'>
+				<input type="submit" class="btn" value="確認"></input> <a
+					id="linkHome" href="/ActionLogger/">
+					<div id="linkBox">戻る</div>
+				</a>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

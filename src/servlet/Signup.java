@@ -24,27 +24,16 @@ import model.ValidationKey;
 //static import
 import static model.InputChecker.checkLongInput;
 import static model.InputChecker.checkPhoneNumber;
-import static model.InputChecker.checkMailAddress;
+import static model.InputChecker.*;
 
-/**
- * Servlet implementation class Signup
- */
 @WebServlet("/Signup")
 public class Signup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public Signup() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -79,10 +68,6 @@ public class Signup extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -105,6 +90,7 @@ public class Signup extends HttpServlet {
 		User user = new User();
 
 		try {
+			String pass = checkLongInput(request.getParameter("password"));
 			user.setUser_id(checkLongInput(request.getParameter("user_id")));
 			user.setName(checkLongInput(request.getParameter("name")));
 			user.setAddress(checkLongInput(request.getParameter("address")));
@@ -113,14 +99,21 @@ public class Signup extends HttpServlet {
 
 			// ユーザIDがかぶれば、入力をさせなおす
 			UserDAO udao = new UserDAO();
-			if (!udao.isUniqueId(user.getUser_id())) {
-				request.setAttribute("rewright", user);
+
+			if (!checkPassword(pass)) {
+				request.setAttribute("rewright", "パスワードは3～30文字で入力して下さい");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 				dispatcher.forward(request, response);
+				return;
+			} else if (!udao.isUniqueId(user.getUser_id())) {
+				request.setAttribute("rewright", "このユーザID、使用されています");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
+				dispatcher.forward(request, response);
+				return;
 			} else {
 
 				// パスワードのハッシュ化
-				String rawPassword = request.getParameter("password");
+				String rawPassword = pass;
 				MessageDigest digest = MessageDigest.getInstance("SHA-256");
 				digest.reset();
 				digest.update(rawPassword.getBytes("utf8"));
@@ -132,9 +125,12 @@ public class Signup extends HttpServlet {
 
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signupConfirm.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
 
-		} catch (NoSuchAlgorithmException e) {
+		} catch (
+
+		NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -145,6 +141,7 @@ public class Signup extends HttpServlet {
 			// エラー表示にフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
 			dispatcher.forward(request, response);
+			return;
 		}
 	}
 

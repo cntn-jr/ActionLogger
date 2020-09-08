@@ -64,10 +64,10 @@
 				<div class="mb-3">
 					<label for="userid">ユーザーID</label> <input type="text"
 						class="form-control" id="userid" name="user_id"
-						placeholder="ユーザーID" value="${rewright.user_id}" required>
+						placeholder="ユーザーID" value="" required>
 					<div class="invalid-feedback">必須</div>
 					<c:if test="${rewright != null}">
-						<p style="color: red; font-size: 0.8em;">&lowast;このIDは使用されています</p>
+						<p style="color: red; font-size: 0.8em;">&lowast;<c:out value="${rewright}"></c:out></p>
 					</c:if>
 				</div>
 				<div class="mb-3">
