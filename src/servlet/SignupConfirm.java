@@ -61,6 +61,12 @@ public class SignupConfirm extends HttpServlet {
 		// ユーザIDから新規ユーザの情報を取得
 		User user = userDAO.getInfo(newUser.getUser_id());
 		session.setAttribute("user", user);
+		//その他のセッションに関すること
+		boolean checked = false;
+		session.setAttribute("checked", checked);
+		session.setAttribute("alter", null);
+		session.removeAttribute("tempUser");
+		session.removeAttribute("newUser");
 		response.sendRedirect("/ActionLogger");
 	}
 

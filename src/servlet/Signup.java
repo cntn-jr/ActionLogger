@@ -101,12 +101,16 @@ public class Signup extends HttpServlet {
 			UserDAO udao = new UserDAO();
 
 			if (!checkPassword(pass)) {
-				request.setAttribute("rewright", "パスワードは3～30文字で入力して下さい");
+				session.removeAttribute("tempUser");
+				request.setAttribute("tempUser", user);
+				request.setAttribute("rewright", "pass");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 				dispatcher.forward(request, response);
 				return;
 			} else if (!udao.isUniqueId(user.getUser_id())) {
-				request.setAttribute("rewright", "このユーザID、使用されています");
+				session.removeAttribute("tempUser");
+				request.setAttribute("tempUser", user);
+				request.setAttribute("rewright", "id");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 				dispatcher.forward(request, response);
 				return;
@@ -121,6 +125,7 @@ public class Signup extends HttpServlet {
 
 				user.setPasswordHash(passwordHash);
 
+				session.setAttribute("tempUser", user);
 				session.setAttribute("newUser", user);
 
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signupConfirm.jsp");

@@ -51,22 +51,28 @@ public class Login extends HttpServlet {
 			User loginUser = new User(user_id);
 
 			LoginLogic loginRogic = new LoginLogic();
-			Boolean canLogin = loginRogic.loginLogic(user_id, password);// userのパスワードが正しいかチェック
+			UserDAO udao = new UserDAO();
 
-			if (canLogin == true) {// パスワードが正しければ
-				UserDAO udao = new UserDAO();
-				loginUser = udao.getInfo(user_id);
-				session.setAttribute("loginUser_id", loginUser.getUser_id());
-				session.setAttribute("user", loginUser);
-				// プロフィールやパスワード変更をするときの、パスワード確認をしたかどうか
-				boolean checked = false;
-				session.setAttribute("checked", checked);
-				session.setAttribute("alter", null);
-				response.sendRedirect("/ActionLogger/");
-			} else {
-				response.sendRedirect("/ActionLogger/Login");// もう一度ログイン画面へ
-				return;
+			//ユーザが存在してれば
+			if (udao.isUser(user_id)) {
+				// パスワードが正しければ
+				if (loginRogic.loginLogic(user_id, password)) {
+					loginUser = udao.getInfo(user_id);
+					session.setAttribute("loginUser_id", loginUser.getUser_id());
+					session.setAttribute("user", loginUser);
+					// プロフィールやパスワード変更をするときの、パスワード確認をしたかどうか
+					boolean checked = false;
+					session.setAttribute("checked", checked);
+					session.setAttribute("alter", null);
+					response.sendRedirect("/ActionLogger/");
+					return;
+				}
 			}
+			request.setAttribute("rewright", "ユーザIDまたはパスワードが違います");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+			dispatcher.forward(request, response);
+			return;
+
 		} catch (InputCheckException e) {
 			// 表示データを用意する
 			ErrorViewData errorData = new ErrorViewData("フォームに入力された内容に問題がありました。", "入力画面に戻る", "/ActionLogger/");

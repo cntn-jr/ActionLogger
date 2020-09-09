@@ -4,15 +4,15 @@
 
 <style>
 #div-table {
-	margin: 3em auto;
+	margin: 3em auto 30px;
 	font-size: 1.2em;
 	font-weight: 500;
-	/* border: 2px #eeeeee solid; */
 	border-radius: 10px;
 	width: 25em;
-	/* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
 	background: #f8f9fa;
 	color: #555555;
+		border: solid 1px #dfe6e9;
+	
 }
 
 table {
@@ -25,18 +25,19 @@ td {
 
 #linkBox {
 	text-align: center;
-	width: 150px;
-	margin: 20px auto;
+	width: 25em;
+	margin: 10px auto;
 	height: 40px;
 	line-height: 40px;
-	background: #78e08f;
-	border: solid 1px #1dd1a1;
+	background: #2ecc71;
+	border: solid 1px #27ae60;
 	border-radius: 4px;
 	user-select: none;
 }
 
 #linkBox:hover {
-	background: #1dd1a1;
+	background: #27ae60;
+	border: solid 1px #27ae60;
 }
 
 #linkEdit {
@@ -50,7 +51,7 @@ td {
 
 <div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">Profile</h1>
+	<h1 class="h2">プロフィール</h1>
 </div>
 <div id="div-table">
 	<table>

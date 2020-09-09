@@ -15,6 +15,30 @@ public class UserDAO {
 	private final String DB_USER = "sa";
 	private final String DB_PASS = "";
 
+	// そのユーザが存在しているかどうか
+	public boolean isUser(String id) {
+		String userId = null;
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			String sql = "SELECT * FROM user WHERE userid = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				userId = rs.getString("userid");
+			}
+			if (userId == null) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 	// IDと一致するユーザを返す（パスワード以外）
 	public User getInfo(String userId) {
 		User user = null;

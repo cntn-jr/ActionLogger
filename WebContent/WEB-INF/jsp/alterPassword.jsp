@@ -108,7 +108,7 @@
 		<form action="/ActionLogger/AlterPassword" method="post">
 			<div class="subContainer">
 				<label for="name">新しいパスワード</label> <input type="password"
-					class="form-control" name="password" placeholder="パスワード" required>
+					class="form-control" name="password" placeholder="パスワード(3文字~30文字)" required>
 				<div class="invalid-feedback">必須</div>
 				<label for="name">パスワード再入力</label> <input type="password"
 					class="form-control" name="re_password" placeholder="パスワード再入力"

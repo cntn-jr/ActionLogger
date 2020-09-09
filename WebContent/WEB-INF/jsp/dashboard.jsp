@@ -34,14 +34,15 @@
 	margin: 20px auto;
 	height: 2em;
 	line-height: 2em;
-	background: #78e08f;
-	border: solid 1px #1dd1a1;
+	background: #2ecc71;
+	border: solid 1px #27ae60;
 	border-radius: 4px;
 	user-select: none;
 }
 
 #linkBox:hover {
-	background: #1dd1a1;
+	background: #27ae60;
+	border: solid 1px #27ae60;
 }
 
 #linkAll {

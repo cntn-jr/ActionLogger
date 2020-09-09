@@ -29,7 +29,7 @@
 }
 
 #container {
-	width: 500px;
+	width: 700px;
 	margin: 50px auto;
 	padding: 20px;
 	border-radius: 10px;
@@ -47,19 +47,17 @@
 .key {
 	text-align: left;
 	font-weight: bold;
+	margin: 20px 0;
 }
 
 .values {
 	text-align: center;
 	font-weight: 500;
 	letter-spacing: 5px;
+	margin: 20px auto;
 }
 
-#btnCnt {
-	text-align: right;
-}
-
-input[type="submit"] {
+#btn {
 	color: #fff;
 	background-color: #778beb;
 	border-color: #546de5;
@@ -69,7 +67,7 @@ input[type="submit"] {
 	font-weight: bold;
 }
 
-input[type="submit"]:hover {
+#btn:hover {
 	color: #fff;
 	background-color: #546de5;
 	border-color: #546de5;

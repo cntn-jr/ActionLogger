@@ -32,16 +32,67 @@
 		font-size: 3.5rem;
 	}
 }
+
+.container {
+	width: 500px;
+	margin: 80px auto;
+}
+
+.subContainer {
+	background: #f8f9fa;
+	border: #dfe6e9 solid 1px;
+	color: #4b4b4b;
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 30px;
+	padding: 50px;
+	font-weight: bold;
+	width: 500px;
+}
+
+#headline {
+	text-align: center;
+	font-weight: bold;
+	margin: 5px 0 30px;
+}
+
+p {
+	text-align: center;
+}
+
+#linkBox {
+	margin: auto;
+	text-align: center;
+	height: 40px;
+	width: 250px;
+	line-height: 40px;
+	background-color: #2ecc71;
+	border: solid 1px #27ae60;
+	border-radius: 10px;
+}
+
+#linkBox:hover {
+	background-color: #27ae60;
+	border: solid 1px #27ae60;
+}
+
+#linkLogin {
+	text-decoration: none;
+	color: #f5f6fa;
+	height: 2em;
+	line-height: 2em;
+	font-weight: bold;
+}
 </style>
 <!-- Custom styles for this template -->
 <link href="/GuiWork/css/dashboard.css" rel="stylesheet">
 
 <script>
-window.history.pushState(null, null, null);
-window.addEventListener("popstate", function() {
-  window.history.pushState(null, null, null);
-  return;
-});
+	window.history.pushState(null, null, null);
+	window.addEventListener("popstate", function() {
+		window.history.pushState(null, null, null);
+		return;
+	});
 </script>
 
 </head>
@@ -51,16 +102,16 @@ window.addEventListener("popstate", function() {
 		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Action
 			Logger</a>
 	</nav>
-	<div class="row">
-		<div class="col"></div>
-		<div class="col-８">
-			<h4 h3 mb-3 font-weight-normal>AcctionLoggerログアウト</h4>
-			ログアウトしました <br>
-			<a href="/ActionLogger/Login">ログインページへ</a>
+
+	<div class="container">
+		<div class="subContainer">
+			<h4 id="headline">AcctionLoggerログアウト</h4>
+			<p>ログアウトしました</p>
 
 		</div>
-		<div class="col"></div>
-
+		<a id="linkLogin" href="/ActionLogger/Login">
+			<div id="linkBox">ログインページへ</div>
+		</a>
 	</div>
 </body>
 
